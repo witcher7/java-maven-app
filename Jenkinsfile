@@ -13,7 +13,7 @@ pipeline {
         stage("build image"){
             steps {
                 echo 'building Docker Image'
-                withCredentials ([usernamePassword(credentailsId:'DockerHub-credentials',passwordVariable :'PASS',usernameVariable: 'USER')])
+                withCredentials ([usernamePassword(credentialsId:'DockerHub-credentials',passwordVariable :'PASS',usernameVariable: 'USER')])
                 sh 'docker build -t chetanpatil06/java-maven:1.1 .'
                 sh  "echo $PASS| docker login -u $USER --password-stdin"
                 sh "docker push chetanpatil06/java-maven:1.1"
