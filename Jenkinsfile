@@ -1,28 +1,33 @@
 #!/usr/bin/env groovy
 
+def gv
+
 pipeline {
     agent any
     tools {
         maven 'Maven'
     }
     stages {
+
+        stage ('init') {
+            steps {
+                script{
+                    gv = script.groovy
+                }
+            }
+        }
         
         stage('build app') {
             steps {
                 script {
-                    echo "building the application..."
-                    sh 'mvn clean package'
+                    gv.buildJar()
                 }
             }
         }
         stage('build image') {
             steps {
                 script {
-                    echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t chetanpatil06/java-maven:1.2 ."
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push chetanpatil06/java-maven:1.2"
+                     gv.buildImage()
                     }
                 }
             }
@@ -30,7 +35,7 @@ pipeline {
         stage('deploy') {
             steps {
                 script {
-                    echo 'deploying docker image to EC2...'
+                    gv.deployApp()
                 }
             }
         }
