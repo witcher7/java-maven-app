@@ -1,40 +1,39 @@
 #!/usr/bin/env groovy
-def gv
 
 pipeline {
     agent any
-    parameters {
-        choice(name:'VERSION',choices ['1.1.0','1.1.2','1.3.0'],description :'')
-        booleanParam(name:'executeTests', defaultValue: true , description:'')
+    tools {
+        maven 'Maven'
     }
     stages {
-        stage('init'){
-            steps{
-                script{
-                    gv = load "script.groovy"
+        
+        stage('build app') {
+            steps {
+                script {
+                    echo "building the application..."
+                    sh 'mvn clean package'
                 }
             }
         }
-        stage('build') {
+        stage('build image') {
             steps {
                 script {
-                    echo "Building the application..."
-                }
-            }
-        }
-        stage('test') {
-            steps {
-                script {
-                    echo "Testing the application..."
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t chetanpatil06/java-maven:1.2 ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push chetanpatil06/java-maven:1.2"
+                    }
                 }
             }
         }
         stage('deploy') {
             steps {
                 script {
-                    echo "Deploying the application..."
+                    echo 'deploying docker image to EC2...'
                 }
             }
         }
+        
     }
 }
