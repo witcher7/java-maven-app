@@ -9,8 +9,9 @@ def buildImage(){
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker push chetanpatil06/java-maven:1.2"
                     }
+}
                     
-def deployApp(){
+def deployApp() {
     echo 'deploying the application'
 }
 
