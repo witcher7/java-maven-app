@@ -2,7 +2,7 @@
 def gv
 
 pipeline {
-    agent none
+    agent any
     parameters {
         choice(name:'VERSION',choices ['1.1.0','1.1.2','1.3.0'],description :'')
         booleanParam(name:'execute tests', defaultValue: true , description:'')
