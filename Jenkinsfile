@@ -31,7 +31,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
         stage('deploy app') {
             steps {
                 script {
