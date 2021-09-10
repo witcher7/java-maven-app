@@ -1,13 +1,19 @@
 def buildJar() {
-
+	echo 'building the application...'
+	sh 'mvn package'
 }
 
 def buildImage() {
-
+	echo 'building the docker image...'
+	withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]){
+        sh 'docker build -t mdemin/java-maven-app:1.2 .'
+        sh "echo ${PASSWORD} | docker login -u ${USER} --password-stdin"
+        sh 'docker push mdemin/java-maven-app:1.2'
+    }
 }
 
 def deployApp() {
-
+	echo 'Please choose the server to deploy to'
 }
 
 return this
