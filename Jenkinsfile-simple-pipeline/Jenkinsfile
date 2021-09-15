@@ -6,12 +6,13 @@ pipeline {
     agent any
     tools {
         maven 'Maven'
+        jdk 'JDK'
     }
     stages {
         stage("init") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    gv = load "Jenkinsfile-simple-pipeline/script.groovy"
                 }
             }
         }
