@@ -1,19 +1,21 @@
+#!/usr/bin/env groovy
+
 def buildJar() {
 	echo 'building the application...'
-	sh 'mvn package'
+	sh 'mvn clean package'
 }
 
 def buildImage() {
 	echo 'building the docker image...'
 	withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]){
-        sh 'docker build -t mdemin/java-maven-app:1.2 .'
+        sh "docker build -t mdemin/java-maven-app:$IMAGE_NAME ."
         sh "echo ${PASSWORD} | docker login -u ${USER} --password-stdin"
-        sh 'docker push mdemin/java-maven-app:1.2'
+        sh "docker push mdemin/java-maven-app:$IMAGE_NAME"
     }
 }
 
 def deployApp() {
-	echo 'Please choose the server to deploy to'
+	echo 'Please choose the ser ver to deploy to'
 }
 
 return this
