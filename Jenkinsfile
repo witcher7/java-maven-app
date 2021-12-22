@@ -16,9 +16,11 @@ pipeline {
             }
         }
         stage("build"){
+            steps{
            script {
                gv.buildApp()
            }
+        }
         }
         stage("test"){
             when {
