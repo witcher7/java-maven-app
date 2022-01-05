@@ -18,8 +18,10 @@ pipeline{
             }
             steps{
                 script{
-                    echo "Building the application..."
-                    echo "Executing pipeline for branch: $BRANCH_NAME"
+                    def dockerCmd = 'docker run -p 3080:3080 -d michaelburak/demo-app:1.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictkHostKeyChecking=no ec2-user@3.86.240.76 ${dockerCmd}"
+                }
                 }
             }
         }
