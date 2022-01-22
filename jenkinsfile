@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-
+def gv
 pipeline {
     agent none
 
@@ -32,29 +32,30 @@ pipeline {
         stage('build') {
             steps {
                 script {
-                    echo "Building the application..."
-                    echo "Building version ${NEW_VERSION}"
-
+                    gv.buildApp()
                 }
             }
         }
         stage('test') {
             when { //conditional expressions
                 expression{
-                    env.BRANCH_NAME=="dev" || env.BRANCH_NAME=="master" //Using build in env variables
+                    params.executeTests
+                   // env.BRANCH_NAME=="dev" || env.BRANCH_NAME=="master" //Using build in env variables
                 }
             }
             steps {
                 script {
-                    echo "Testing the application..."
-                    echo "deploying with ${SERVER_CREDENTIALS}"
+                        gv.testApp()
                 }
             }
         }
         stage('deploy') {
             steps {
                 script {
-                    echo "Deploying the application..."
+                env.ENV = input message: "Select the environment to deploy to", ok: "Done", parameters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
+
+                    gv.deployApp()
+                    echo "Deploying to ${ENV}"
   
                 }
                 }
