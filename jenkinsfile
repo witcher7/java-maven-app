@@ -4,7 +4,7 @@
 pipeline {
     agent none
 
-tools{
+tools{ //build tools, supported one are maven, jdk and gradle
     maven 'maven'
 }
     environment{
@@ -17,7 +17,6 @@ tools{
                 script {
                     echo "Building the application..."
                     echo "Building version ${NEW_VERSION}"
-                    sh "mvn install"
 
                 }
             }
