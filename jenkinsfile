@@ -1,73 +1,40 @@
 #!/usr/bin/env groovy
 
 def gv
+
 pipeline {
     agent any
-
-    tools{
-        
-    maven 'maven' //define build tools
-
+    tools {
+        maven 'Maven'
     }
-
-    parameters {
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
-    }
-
-    environment{
-    NEW_VERSION = '1.0.1'
-    SERVER_CREDENTIALS=credentials('gitlab') //global credentials
-    }
-    
     stages {
         stage("init") {
             steps {
                 script {
-                   gv = load "script.groovy"
+                    gv = load "script.groovy"
                 }
             }
         }
-
-        stage('build') {
+        stage("build jar") {
             steps {
                 script {
-                    gv.buildApp()
+                    gv.buildJar()
                 }
             }
         }
-        stage('test') {
-            when { //conditional expressions
-                expression{
-                    params.executeTests
-                   // env.BRANCH_NAME=="dev" || env.BRANCH_NAME=="master" //Using build in env variables
-                }
-            }
+        stage("build image") {
             steps {
                 script {
-                        gv.testApp()
+                    gv.buildImage()
                 }
             }
         }
-        stage('deploy') {
+        stage("deploy") {
             steps {
                 script {
-                env.ENV = input message: "Select the environment to deploy to", ok: "Done", parameters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
-
                     gv.deployApp()
-                    echo "Deploying to ${ENV}"
-  
-                }
                 }
             }
-        
-    }
-    post{ //For post stages checks
-        always{ //Always run irrespective of success or failure in code
-            echo 'Finished'
-        }
-        success{ //Incase of success
-            echo 'successfully done'
         }
     }
 }
