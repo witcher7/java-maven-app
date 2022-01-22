@@ -35,9 +35,11 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
-                 
+                    withCredentials([usernamePassword(credentials:'gitlab',usernameVariable:USER,passwordVariable:PWD)]){ 
+                        // local stage credentials definition 
                         //sh "some script ${USER} ${PWD}" 
                     }
+                }
                 }
             }
         
