@@ -7,7 +7,7 @@ pipeline {
     environment{
     NEW_VERSION = '1.0.1'
     SERVER_CREDENTIALS=credentials('gitlab') //global credentials
-}
+    }
     stages {
         stage('build') {
             steps {
@@ -40,7 +40,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
     }
     post{ //For post stages checks
         always{ //Always run irrespective of success or failure in code
