@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-enviornment{
+environment{
     NEW_VERSION = '1.0.1'
 }
 pipeline {
