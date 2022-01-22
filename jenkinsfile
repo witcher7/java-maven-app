@@ -14,10 +14,7 @@ pipeline {
                 script {
                     echo "Building the application..."
                     echo "Building version ${NEW_VERSION}"
-                    withcredentials([usernamePassword(credentials:'gitlab',usernameVariable:USER,passwordVariable:PWD)
-                    ]){ //local stage credentials definition //credentials plugin must be installed
-                        //sh "some script ${USER} ${PWD}" 
-                    }
+
                 }
             }
         }
@@ -38,6 +35,10 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
+                    withCredentials([usernamePassword(credentials:'gitlab',usernameVariable:USER,passwordVariable:PWD)
+                    ]){ //local stage credentials definition //credentials plugin must be installed
+                        //sh "some script ${USER} ${PWD}" 
+                    }
                 }
             }
         }
