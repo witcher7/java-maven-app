@@ -3,6 +3,10 @@ def buildJar() {
     sh 'mvn package'
 } 
 
+
+def buildApp(){
+    echo "building the app..."
+}
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
@@ -12,6 +16,10 @@ def buildImage() {
     }
 } 
 
+
+def testApp(){
+    echo "Test step with version ${params.VERSION}"
+}
 def deployApp() {
     echo 'deploying the application...'
 } 
