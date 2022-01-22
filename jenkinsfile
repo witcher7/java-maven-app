@@ -17,7 +17,7 @@ pipeline {
                     withcredentials([   //local stage credentials definition //credentials plugin must be installed
                         usernamepassword(credentials:'gitlab',usernameVariable:USER,passwordVariable:PWD)
                     ]){
-                        sh "some script ${USER} ${PWD}" 
+                        //sh "some script ${USER} ${PWD}" 
                     }
                 }
             }
