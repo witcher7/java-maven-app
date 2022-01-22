@@ -4,6 +4,9 @@
 pipeline {
     agent none
 
+tools{
+    maven 'maven'
+}
     environment{
     NEW_VERSION = '1.0.1'
     SERVER_CREDENTIALS=credentials('gitlab') //global credentials
@@ -14,6 +17,7 @@ pipeline {
                 script {
                     echo "Building the application..."
                     echo "Building version ${NEW_VERSION}"
+                    sh "maven install"
 
                 }
             }
