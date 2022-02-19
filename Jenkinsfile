@@ -9,7 +9,7 @@ pipeline {
     }
     parameters {
         
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+       
     }
     stages {
         stage("init") {
@@ -20,11 +20,6 @@ pipeline {
             }
         }
          stage("test") {
-            when {
-                expression {
-                    params.executeTests
-                }
-            }
             steps {
                 script {
                     gv.testApp()
