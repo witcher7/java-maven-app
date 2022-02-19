@@ -48,7 +48,7 @@ pipeline {
                     env.ENV = input message: "Select the environment to deploy to", ok: "Done", parameters: [choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')]
 
                     gv.deployApp()
-                    echo "Deploying to ${ENV} with Syrine DOUKALI"
+                    echo "Deploying to ${ENV} with DOUKOU"
                 }
             }
         }
