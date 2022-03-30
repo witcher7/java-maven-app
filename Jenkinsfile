@@ -1,38 +1,34 @@
-def gv
-
 pipeline {
     agent any
+    environment {
+        NEW_VERSION = '1.3.0'
+        SERVER_CREDENTIALS = credentials('server-credentials')
+    }
+
     stages {
-        stage("init") {
+        stage('build') {
             steps {
-                script {
-                    gv = load "script.groovy"
-                }
+                echo 'building the application...'
+                echo "building version ${NEW_VERSION}"
             }
         }
-        stage("build jar") {
+        
+        stage('test') {
             steps {
-                script {
-                    echo "building jar"
-                    //gv.buildJar()
-                }
+                echo 'testing the application...'
             }
         }
-        stage("build image") {
+        
+        stage('deploy') {
             steps {
-                script {
-                    echo "building image"
-                    //gv.buildImage()
-                }
+                echo 'deploying the application...'
+                withCredentials([
+                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD){
+                        sh "some script ${USER} ${PWD}"
+                    }
+
+                ])
             }
         }
-        stage("deploy") {
-            steps {
-                script {
-                    echo "deploying"
-                    //gv.deployApp()
-                }
-            }
-        }
-    }   
+    }
 }
