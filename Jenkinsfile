@@ -22,7 +22,7 @@ pipeline {
         stage('deploy') {
             steps {
                 echo 'deploying the application...'
-                withCjhredentials([
+                withCredentials([
                     usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
                 ]){
                         sh "some script ${USER} ${PWD}"
