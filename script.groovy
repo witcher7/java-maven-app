@@ -6,9 +6,9 @@ def buildApp(){
 def buildDocker(){
     echo 'building the docker image...'
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable:'USER')]){
-                         sh 'docker build -t amine0648280049/demo_app:2.0 .'
+                         sh 'docker build -t amine0648280049/demo_app:3.0 .'
                          sh "echo $PASS | docker login -u $USER --password-stdin"
-                         sh 'docker push amine0648280049/demo_app:2.0'
+                         sh 'docker push amine0648280049/demo_app:3.0'
                      }
 }
 
