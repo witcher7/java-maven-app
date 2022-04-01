@@ -6,41 +6,37 @@ pipeline {
     }
     stages {
 
-        stage("init"){
-            steps{
-                script{
-                    gv = load "script.groovy"
-                }
-            }
-        }
-        stage('build jar') {
+        stage('test') {
             steps {
                 script{
-                     gv.buildApp()
+                    echo "Testing the appication..."
+                    ech "Executing pipeline for branch $BRANCH_NAME"
                 }
             }
         }
 
-        stage('build docker image') {
-            steps {
-                script{
-                     gv.buildDocker()
+        stage("build"){
+            when{
+                expression{
+                    BRANCH_NAME == 'master'
                 }
             }
-        }
-        
-        stage('test') {
-            steps {
+            steps{
                 script{
-                    gv.testApp()
+                    echo "Building the application..."
                 }
             }
         }
         
         stage('deploy') {
+            when{
+                expression{
+                    BRANCH_NAME == 'master'
+                }
+            }
             steps {
                 script{
-                    gv.deployApp()
+                    echo "Deploying the application..."
                 }
             }
         }
