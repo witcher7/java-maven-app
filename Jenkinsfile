@@ -23,7 +23,7 @@ pipeline {
                 script {
                     echo "building image"
                     //gv.buildImage()
-                } //
+                } 
             }
         }
         stage("deploy") {
