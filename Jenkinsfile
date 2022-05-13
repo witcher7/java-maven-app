@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     stages{
-        stage(name: 'build') {
+        stage('build image') {
             steps{
-                echo(message: 'Initializing for a build')
+                echo "Initializing for a build stage"
             }
         }
-        stage(name: 'test') {
+        stage('test image') {
             steps{
-                echo(message: 'Initializing for a test')
+                echo "Initializing for a test stage"
             }
         }
 
-        stage(name: 'deploy') {
+        stage('deploy image') {
             steps{
-                echo(message: 'Initialzing for a deploy')
+                echo(message: 'Initialzing for a deploy stage')
             }
         }
     }
