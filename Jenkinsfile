@@ -20,7 +20,7 @@ pipeline {
         stage('deploy image') {
             steps{
                 echo "Initializing for a  deploy stage"
-                echo env.BRANCH_NAME
+                echo BRANCH_NAME
             }
         }
     }
