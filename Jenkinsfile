@@ -15,7 +15,9 @@ pipeline {
             steps{
                 echo "Initializing for a test"
                 echo env.JOB_NAME
+                script {
                 gv = load "scriptTest.groovy"
+                }
             }
         }
 
