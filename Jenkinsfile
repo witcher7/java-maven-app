@@ -1,5 +1,3 @@
-CODE_CHANGES = getGi
-
 pipeline {
     agent any
     
@@ -25,7 +23,6 @@ pipeline {
         stage('deploy image') {
             steps{
                 echo "Initializing for a  deploy stage"
-                
             }
         }
     }
