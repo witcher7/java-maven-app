@@ -11,7 +11,6 @@ pipeline {
     }
     stages{
         stage('build image') {
-            
             steps{
                 echo "Initializing for a test"
                 echo env.JOB_NAME
@@ -42,10 +41,11 @@ pipeline {
         }
 
         stage('deploy image') {
-            script {
+            
+            steps{
+                script {
             env.ENV = input(message: 'Select a Version', ok: 'Version selected.', parameters: [choice(name: "Dep_Version", choices: ["1", "2"], description: "Version Selection")])
             }
-            steps{
                 echo "Initializing for a  deploy stage"
                 echo "${params.VERSION}"
                 echo "${ENV}"
