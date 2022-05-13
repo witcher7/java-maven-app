@@ -10,7 +10,6 @@ pipeline {
           sh 'mvn package'
         }
       }
-      stages{
           stage("Build Image") {
             steps {
               echo "====++++Building Images++++===="
@@ -27,7 +26,6 @@ pipeline {
           }
       }
 
-      stages{
           stage("deploy") {
             steps {
               sh '''
@@ -36,6 +34,4 @@ pipeline {
             '''
             }
           }
-      }
-  }
 }
