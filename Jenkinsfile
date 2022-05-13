@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         NEW_VERSION = "snapshot-2"
-        DOCKER_ACCESS = credenetials("Github-ID")
+        DOCKER_ACCESS = credentials("Github-ID")
     }
     stages{
         stage('build image') {
