@@ -24,6 +24,7 @@ pipeline {
 
         stage('deploy image') {
             steps{
+                echo "Initializing for a  deploy stage"
                 
             }
         }
