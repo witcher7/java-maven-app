@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+    environment {
+        NEW_VERSION = "snapshot-2"
+    }
     stages{
         stage('build image') {
             
@@ -13,7 +15,7 @@ pipeline {
         stage('test image') {
             steps{
                 echo "Initializing for a test stage"
-                echo env.BUILD_NUMBER
+                echo "${NEW_VERSION}" 
             }
         }
 
