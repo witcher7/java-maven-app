@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
     agent any
     parameters{
@@ -13,6 +15,7 @@ pipeline {
             steps{
                 echo "Initializing for a test"
                 echo env.JOB_NAME
+                gv = load "scriptTest.groovy"
             }
         }
 
@@ -20,6 +23,9 @@ pipeline {
             steps{
                 echo "Initializing for a test stage"
                 echo "${NEW_VERSION}" 
+                script {
+                 gv.test()
+                }
             }
         }
 
