@@ -22,8 +22,12 @@ pipeline {
 
         stage('deploy image') {
             steps{
-                echo "${DOCKER_ACCESS}"
                 echo "Initializing for a  deploy stage"
+                withCredentials([
+                    usernamePassword(credentials: "	Docker-ID", usernameVariable: USER, passwordVariable: PASS)
+                ]) {
+                    echo "${USER} : ${PASS}"
+                }
 
             }
         }
