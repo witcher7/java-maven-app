@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         NEW_VERSION = "snapshot-2"
+        DOCKER_ACCESS = credenetials("Github-ID")
     }
     stages{
         stage('build image') {
@@ -21,8 +22,9 @@ pipeline {
 
         stage('deploy image') {
             steps{
+                echo "${DOCKER_ACCESS}"
                 echo "Initializing for a  deploy stage"
-                echo BRANCH_NAME
+
             }
         }
     }
