@@ -13,7 +13,7 @@ pipeline {
         stage('test image') {
             steps{
                 echo "Initializing for a test stage"
-                ECHO env.BUILD_NUMBER
+                echo env.BUILD_NUMBER
             }
         }
 
