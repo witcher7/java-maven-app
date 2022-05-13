@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters{
+        choice(name: "VERSION", choices: ["1.2", "1.2.1"], description: "Version Control")
+    }
     environment {
         NEW_VERSION = "snapshot-2"
         DOCKER_ACCESS = credentials("Github-ID")
@@ -23,11 +26,7 @@ pipeline {
         stage('deploy image') {
             steps{
                 echo "Initializing for a  deploy stage"
-                withCredentials([
-                    usernamePassword(credentials: "	Docker-ID", usernameVariable: USER, passwordVariable: PASS)
-                ]) {
-                    echo "${USER} : ${PASS}"
-                }
+                echo "${params.VERSION}"
 
             }
         }
