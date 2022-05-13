@@ -22,19 +22,33 @@ pipeline {
         }
 
         stage('test image') {
-            steps{
+            input{
+                message "Please Select an <Env>"
+                ok "All Selected"
+                parameters{
+                    choice(name: "ENV", choices: ["Dev", "Test", "Deploy", "Build"], description: "Envoirnment Selection")
+                }
+
+            }
+            
+            steps{                
                 echo "Initializing for a test stage"
                 echo "${NEW_VERSION}" 
                 script {
                  gv.test()
                 }
+                echo "${ENV}"
             }
         }
 
         stage('deploy image') {
+            script {
+            env.ENV = input(message: 'Select a Version', ok: 'Version selected.', parameters: [choice(name: "Dep_Version", choices: ["1", "2"], description: "Version Selection")])
+            }
             steps{
                 echo "Initializing for a  deploy stage"
                 echo "${params.VERSION}"
+                echo "${ENV}"
 
             }
         }
