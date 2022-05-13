@@ -12,7 +12,8 @@ pipeline {
       }
       stages{
           stage("Build Image") {
-            echo "====++++Building Images++++===="
+            steps {
+              echo "====++++Building Images++++===="
             withCredentials([
               usernamePassword(credentialsId: '	Docker-ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')
             ]) {
@@ -22,15 +23,18 @@ pipeline {
                 docker push erfanrider/java-apps:1.2.0
               '''
             }
+            }
           }
       }
 
       stages{
           stage("deploy") {
-            sh '''
+            steps {
+              sh '''
               echo "Done with Deploying"
               echo "Please Check the Private Docker Registry"
             '''
+            }
           }
       }
   }
