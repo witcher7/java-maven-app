@@ -1,40 +1,40 @@
-def gvScript
+
 
 pipeline {
   agent any
-  tools {
-    maven 'Maven-Runner'
-  }
+
   stages {
-      stage("init") {
-        steps {
-          script {
-          gvScript = load 'script.groovy'
-          }
-        }
+    stage("init") {
+      steps {
+        echo "Initializing the preparations"
       }
+    }
 
-      stage('Build Jar') {
-        steps {
-                script {
-                gvScript.buildJar()          
-                }
-            }
+    stage("test") {
+      steps {
+        echo "Testing the apps"    
       }
-      stage("Build Image") {
-        steps {
-            script {
-            gvScript.buildImage()          
-            }
+    }
+    stage("build") {
+      when {
+        expression {
+          BRANCH_NAME == 'master'
         }
       }
-
-      stage("deploy") {
-        steps {
-          script {
-          gvScript.deploy()
-          }
+      steps {
+        echo "Building the apps"        
+      }
+    }
+    
+    stage("deploy") {
+      when {
+        expression {
+          BRANCH_NAME == 'master'
         }
       }
+      steps {
+        echo "Deploying the apps"
+      }
+    }
   }
 }
