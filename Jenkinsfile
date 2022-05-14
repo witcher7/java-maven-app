@@ -20,7 +20,7 @@ pipeline {
     stage("Build Jar") {
         steps {
             echo "Building the Maven Project"
-            buildJar()
+            buildJar "erfanrider" "java-apps:1.5.0"
         }
     }
 
