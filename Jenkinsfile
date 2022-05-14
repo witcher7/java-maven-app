@@ -37,7 +37,7 @@ pipeline {
         echo "Deploying the apps"
         script {
           gv.deploy()
-        }
+
       }
     }
   }
