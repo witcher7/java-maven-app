@@ -2,11 +2,11 @@
 
 @Library('Jenkins-shared-library')
 def gv
-tools {
-    mvn "Maven-Runner"
-}
 pipeline {
   agent any
+    tools {
+        mvn "Maven-Runner"
+    }
   stages {
     stage("init") {
       steps {
@@ -37,7 +37,6 @@ pipeline {
         echo "Deploying the apps"
         script {
           gv.deploy()
-
       }
     }
   }
