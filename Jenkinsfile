@@ -20,7 +20,7 @@ pipeline {
     stage("Build Jar") {
         steps {
             echo "Building the Maven Project"
-            buildJar "erfanrider" "java-apps:1.5.0"
+            buildJar()
         }
     }
 
@@ -28,7 +28,7 @@ pipeline {
     stage("build Docker Images") {
         steps {
           echo "Building the MVN Project"
-            buildDockerImage()
+            buildDockerImage "erfanrider" "java-apps:1.5.0"
          }
     }
     
