@@ -38,6 +38,7 @@ pipeline {
         script {
           gv.deploy()
       }
+      }
     }
   }
 }
