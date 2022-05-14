@@ -1,4 +1,4 @@
-
+def gv
 
 pipeline {
   agent any
@@ -6,7 +6,10 @@ pipeline {
   stages {
     stage("init") {
       steps {
-        echo "Initializing the preparations"
+            echo "Initializing the preparations"
+        script {
+            gv = load 'script.groovy'
+        }
       }
     }
 
@@ -21,9 +24,22 @@ pipeline {
           BRANCH_NAME == 'master'
         }
       }
-      steps {
-        echo "Building the apps"        
-      }
+steps {
+    step {
+          echo "Building the MVN Project"
+          script {
+              gv.buildJar()
+          }
+    }
+
+    step {
+            echo "Building the dockers images"
+            script {
+                gv.buildImage()
+            }
+    }
+
+}
     }
     
     stage("deploy") {
@@ -34,6 +50,9 @@ pipeline {
       }
       steps {
         echo "Deploying the apps"
+        script {
+            gv.deploy()
+        }
       }
     }
   }
