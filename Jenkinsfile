@@ -9,22 +9,22 @@ pipeline {
       }
     }
     stage("build") {
-      when {
-        expression {
-          BRANCH_NAME == 'master'
-        }
-      }
+//       when {
+//         expression {
+//           BRANCH_NAME == 'master'
+//         }
+//       }
         steps {
           echo "Building the MVN Project"
          }
     }
     
     stage("deploy") {
-      when {
-        expression {
-          BRANCH_NAME == 'master'
-        }
-      }
+//       when {
+//         expression {
+//           BRANCH_NAME == 'master'
+//         }
+//       }
       steps {
         echo "Deploying the apps"
       }
