@@ -2,6 +2,7 @@
 
 @Library('Jenkins-shared-library')
 def gv
+
 pipeline {
   agent any
     tools {
@@ -29,7 +30,7 @@ pipeline {
     	
         steps {
           echo "Building the MVN Project"
-            buildDockerImage "erfanrider java-apps:1.5.0"
+            buildDockerImage "erfanrider/java-apps:1.6.0"
          }
     }
     
