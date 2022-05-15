@@ -30,7 +30,7 @@ pipeline {
     	
         steps {
           echo "Building the MVN Project"
-            buildDockerImage(dockerReg="erfanrider", imageTag="java-apps:1.4.0")
+            buildDockerImage "erfanrider", "java-apps:1.4.0"
          }
     }
     
