@@ -27,7 +27,6 @@ pipeline {
     }
 
     stage("build Docker Images") {
-    	
         steps {
           echo "Building the MVN Project"
             buildDockerImage "erfanrider", "java-apps:1.3.0"
