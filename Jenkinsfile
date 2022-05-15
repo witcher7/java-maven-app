@@ -26,11 +26,12 @@ pipeline {
     }
 
     stage("build Docker Images") {
-    	script {
+    	
+        steps {
+        	script {
     	 	env.dockerRegistry = "erfanrider"
     	 	env.tagName = "java-apps:1.5.0"
-    	}
-        steps {
+    		}
           echo "Building the MVN Project"
             buildDockerImage "erfanrider java-apps:1.5.0"
          }
