@@ -15,7 +15,7 @@ pipeline {
 //         }
 //       }
         steps {
-          echo "Building the MVN Project"
+          echo "Building the MVN Project in an integrated level"
          }
     }
     
@@ -26,7 +26,7 @@ pipeline {
 //         }
 //       }
       steps {
-        echo "Deploying the apps"
+        echo "Deploying the apps in an integrated level "
       }
     }
   }
