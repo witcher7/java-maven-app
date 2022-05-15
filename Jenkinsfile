@@ -43,7 +43,7 @@ pipeline {
     
     stage("deploy") {
       steps {
-        echo "Deploying the apps"
+        echo "Deploying the apps in an multibranch triggering way"
         script {
           gv.deploy()
       }
