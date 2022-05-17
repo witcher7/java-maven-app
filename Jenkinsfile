@@ -2,12 +2,15 @@
 
 pipeline {
     agent any
-        
+    tools {
+        maven "Maven-Runner"
+    }
     stages {
     
-        stage('test') {
+        stage('Building Jar File') {
           steps {
               echo "Testing the Maven app"
+              sh 'mvn clean package'
           } 
         }
         
