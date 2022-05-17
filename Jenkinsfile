@@ -2,7 +2,7 @@
 
 pipeline {
     agent any
-    
+        
     stages {
     
         stage('test') {
@@ -13,7 +13,16 @@ pipeline {
         
         stage('Building the Artifacts') {
            steps {
-               echo "Building the apps"
+           		withCredentials([ 
+           				usernamePassword(credentialsId: "Docker-ID", usernameVariable: 'DOCKER_ID', passwordVariable: 'DOCKER_PASS')
+           		 ]) {
+           		     echo "Getting ready log into private docker registry . . ."
+           		     sh "docker build --tag erfanrider/java-app:1.1.0 ."
+           		     sh "echo \"$DOCKER_PASS\" | docker login -u \"$DOCKER_ID\" --password-stdin"
+           		     sh 'docker push erfanrider/java-app:1.1.0' 
+           		     
+           		 }
+
            }
         }
         
