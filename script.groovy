@@ -1,19 +1,27 @@
-def buildJar() {
-    echo "building the application..."
-    sh 'mvn package'
-} 
+def buildJar () {
+    echo "====++++Building the Maven Project++++===="
+          sh 'mvn package'
+}
 
-def buildImage() {
-    echo "building the docker image..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push nanajanashia/demo-app:jma-2.0'
-    }
-} 
+def buildImage () {
+     echo "====++++Building Images++++===="
+            withCredentials([
+              usernamePassword(credentialsId: '	Docker-ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')
+            ]) {
+              sh '''
+                docker build --tag erfanrider/java-apps:1.2.0 .
+                echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
+                docker push erfanrider/java-apps:1.2.0
+              '''
+            }
+}
 
-def deployApp() {
-    echo 'deploying the application...'
-} 
+def deploy() {
+    sh '''
+              echo "Done with Deploying"
+              echo "Please Check the Private Docker Registry"
+        '''
+}
+
 
 return this
