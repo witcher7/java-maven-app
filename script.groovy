@@ -12,7 +12,6 @@ def buildDockerImage() {
         sh "docker build --tag erfanrider/java-app:1.1.0 ."
 
     }
-
 def pushDockerImage() {
     echo "Pushing the Docker image built in the previous section"
     withCredentials([
