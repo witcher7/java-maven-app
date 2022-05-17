@@ -1,37 +1,45 @@
+#!/usr/bin/env groovy
 
-
+def gv
 pipeline {
     agent any
     tools {
         maven "Maven-Runner"
     }
+
+
     stages {
-    
+
+        stage("Initial Steps") {
+            steps {
+                script {
+                    gv = load 'script.groovy'
+                }
+            }
+        }
+
         stage('Building Jar File') {
           steps {
-              echo "Testing the Maven app"
-              sh 'mvn clean package'
-          } 
+              script {
+                gv.buildJar()
+              }
+          }
         }
         
         stage('Building the Artifacts') {
            steps {
-           		withCredentials([ 
-           				usernamePassword(credentialsId: "Docker-ID", usernameVariable: 'DOCKER_ID', passwordVariable: 'DOCKER_PASS')
-           		 ]) {
-           		     echo "Getting ready log into private docker registry . . ."
-           		     sh "docker build --tag erfanrider/java-app:1.1.0 ."
-           		     sh "echo \"$DOCKER_PASS\" | docker login -u \"$DOCKER_ID\" --password-stdin"
-           		     sh 'docker push erfanrider/java-app:1.1.0' 
-           		     
-           		 }
-
+                script {
+                    gv.buildDockerImage()
+                }
            }
         }
         
         stage('Example Build') {
            steps {
                echo "Deploying to the EC2"
+               script {
+                   gv.pushDockerImage()
+               }
            }
         }
     }
