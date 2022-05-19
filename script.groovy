@@ -1,19 +1,25 @@
+
 def buildJar() {
-    echo "building the application..."
-    sh 'mvn package'
-} 
+    echo "Building the Maven Project"
+    sh 'mvn clean package'
+}
 
-def buildImage() {
-    echo "building the docker image..."
-    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t nanajanashia/demo-app:jma-2.0 .'
-        sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh 'docker push nanajanashia/demo-app:jma-2.0'
+
+def buildDockerImage() {
+    echo "Building the Docker Image"
+
+        echo "Getting ready log into private docker registry . . ."
+        sh "docker build --tag erfanrider/java-app:1.1.0 ."
+
     }
-} 
-
-def deployApp() {
-    echo 'deploying the application...'
-} 
+def pushDockerImage() {
+    echo "Pushing the Docker image built in the previous section"
+    withCredentials([
+            usernamePassword(credentialsId: "Docker-ID", usernameVariable: 'DOCKER_ID', passwordVariable: 'DOCKER_PASS')
+    ]) {
+        sh "echo \"$DOCKER_PASS\" | docker login -u \"$DOCKER_ID\" --password-stdin"
+        sh 'docker push erfanrider/java-app:1.1.0'
+    }
+}
 
 return this
