@@ -1,3 +1,5 @@
+def gv
+
 pipeline {
     agent any
 
@@ -34,6 +36,14 @@ pipeline {
 
                 script {
                     echo "Param choice is true ${params.Version}"
+                }
+            }
+        }
+
+        stage("Test Groovy") {
+            steps {
+                script {
+                    gv.deployApp()
                 }
             }
         }
