@@ -32,11 +32,6 @@ pipeline {
         stage("Parameter Boolean") {
             steps {
 
-                when {
-                  expression {
-                     params.executeTest == true
-                  }
-                }
                 script {
                     echo "Parameter Boolean is true ${params.executeTest}"
                 }
@@ -45,11 +40,6 @@ pipeline {
         stage("Parameter Choice") {
             steps {
 
-                when {
-                    expression {
-                        params.Version == '1.0.1'
-                    }
-                }
                 script {
                     echo "Param choice is true ${params.Version}"
                 }
