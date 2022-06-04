@@ -1,36 +1,57 @@
-def gv
-
 pipeline {
     agent any
+
+    environment {
+        Test_ENV= 'test_1'
+    }
+
+    parameters{  
+       booleanParam(name: 'executeTest', defaultValue: true, description: 'this is to execute tests') 
+       choice(name: 'Version', choices: ['1.0.0', '1.0.1', '1.1.0'], description: 'there are version choices')  
+   }
+
+
     stages {
-        stage("init") {
+        stage("Env Var") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "env.BRANCH_NAME"
+                    echo "Test_Env_is: ${Test_ENV}"
                 }
             }
         }
-        stage("build jar") {
+        stage("Credentials") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    withCredentials{[
+                       usernamePassword(credentials: 'test_credentials', usernameVariable: User_Name, passwordVariable: Passwd)     
+                  ]}
                 }
             }
         }
-        stage("build image") {
+        stage("Parameter Boolean") {
             steps {
+
+                when {
+                  expression {
+                     params.executeTest == true
+                  }
+                }
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "Parameter Boolean is true"
                 }
             }
         }
-        stage("deploy") {
+        stage("Parameter Choice") {
             steps {
+
+                when {
+                    expression {
+                        params.Version == 1.0.1
+                    }
+                }
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    echo "Param choice is true"
                 }
             }
         }
