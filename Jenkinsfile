@@ -14,6 +14,16 @@ pipeline {
 
 
     stages {
+
+        stage("Groovy Init") {
+            steps {
+                script {
+                    //Define the file of groovy script
+                    gv = load "script.groovy"
+                }
+            }
+        }
+        
         stage("Env Var") {
             steps {
                 script {
