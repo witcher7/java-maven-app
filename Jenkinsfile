@@ -38,7 +38,7 @@ pipeline {
                   }
                 }
                 script {
-                    echo "Parameter Boolean is true"
+                    echo "Parameter Boolean is true ${params.executeTest}"
                 }
             }
         }
@@ -47,11 +47,11 @@ pipeline {
 
                 when {
                     expression {
-                        params.Version == 1.0.1
+                        params.Version == '1.0.1'
                     }
                 }
                 script {
-                    echo "Param choice is true"
+                    echo "Param choice is true ${params.Version}"
                 }
             }
         }
