@@ -20,15 +20,7 @@ pipeline {
                 }
             }
         }
-        stage("Credentials") {
-            steps {
-                script {
-                    withCredentials{[
-                       usernamePassword(credentials: 'test_credentials', usernameVariable: User_Name, passwordVariable: Passwd)     
-                  ]}
-                }
-            }
-        }
+
         stage("Parameter Boolean") {
             steps {
 
