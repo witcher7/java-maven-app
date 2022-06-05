@@ -1,78 +1,32 @@
-def gv
-
 pipeline {
     agent any
 
-    environment {
-        Test_ENV= 'test_1'
+    tools {
+      maven 'Maven'
     }
-
-    parameters{  
-       booleanParam(name: 'executeTest', defaultValue: true, description: 'this is to execute tests') 
-       choice(name: 'Version', choices: ['1.0.0', '1.0.1', '1.1.0'], description: 'there are version choices')  
-   }
-
 
     stages {
 
-        stage("Groovy Init") {
+        stage('Build Jar') {
             steps {
                 script {
-                    //Define the file of groovy script
-                    gv = load "script.groovy"
-                }
+                   echo 'Building Jar Application ....'
+                   sh 'mvn package'
             }
+          }
         }
-        
-        stage("Env Var") {
+
+        stage('Build Image') {
             steps {
-                script {
-                    echo "env.BRANCH_NAME"
-                    echo "Test_Env_is: ${Test_ENV}"
-                }
+               script {
+                   withCredentials  ([ usernamePassword(credentialsId: 'DockerHub_Credentials', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                      sh 'docker build -t 139646/java-maven-app:1.0 .'
+                      sh "echo $PASSWORD | docker login -u $USER --password-stdin"
+                      sh 'docker push 139646/java-maven-app:1.0'
+                      echo "Image pushed Successfully ..... "
+                    }
+               }
             }
         }
-
-        stage("Parameter Boolean") {
-            steps {
-
-                script {
-                    echo "Parameter Boolean is true ${params.executeTest}"
-                }
-            }
-        }
-        stage("Parameter Choice") {
-            steps {
-
-                script {
-                    echo "Param choice is true ${params.Version}"
-                }
-            }
-        }
-
-        stage("Test Groovy") {
-            steps {
-                script {
-                    gv.deployApp()
-                }
-            }
-        }
-
-        stage("Deploy Env") {
-
-            input {
-                message "Choose the Env to deploy in"
-                ok "Done"
-                parameters {
-                    choice(name: 'ENV', choices: ['DEV', 'TEST', 'PROD'], description: 'there are ENV choices')
-                }
-
-            }
-            steps {
-                script {
-                   echo "This is the ENV: ${ENV}"
-                }
-            }
-        }
-    }   
+    }
 }
