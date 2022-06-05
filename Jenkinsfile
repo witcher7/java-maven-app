@@ -1,35 +1,30 @@
-def groovy
-
 pipeline {
     agent any
-
-    tools {
-      maven 'Maven'
-    }
-
+   
     stages {
 
-        stage ('Init Groovy') {
+        stage ('Test') {
             steps {
                 script {
-                    groovy = load "script.groovy"
+                   echo "Testing the App" 
+                   echo "Branch: $BRANCH_NAME"
                 }
             }
         }
-        stage('Build Jar') {
+
+        stage ('Build') {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'
+                }
+            }
             steps {
                 script {
-                   groovy.Build_Jar()
+                   echo "Building the App" 
+                   echo "Branch: $BRANCH_NAME" 
+                }
             }
-          }
         }
 
-        stage('Build Image') {
-            steps {
-               script {
-                   groovy.Build_Image()
-               }
-            }
-        }
     }
 }
