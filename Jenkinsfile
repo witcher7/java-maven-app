@@ -25,17 +25,12 @@ pipeline {
                 }
             }
         }
-        stage ('Init Groovy') {
-            steps {
-                script {
-                    groovy = load "script.groovy"
-                }
-            }
-        }
+        
         stage('Build Jar') {
             steps {
                 script {
-                   build_jar()
+                   echo "Building Jar Application ...."
+                   sh 'mvn clean package'   //to remove older versions jar files
             }
           }
         }
@@ -43,7 +38,12 @@ pipeline {
         stage('Build Image') {
             steps {
                script {
-                   build_image( "139646/java-maven-app:$IMAGE_NAME")     //Using IMAGE_NAME to use the version of the app + build_number 
+                    withCredentials  ([ usernamePassword(credentialsId: 'DockerHub_Credentials', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                         sh "docker build -t ${IMAGE_NAME} ."
+                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
+                         sh "docker push ${IMAGE_NAME}"
+                         echo "Image ${IMAGE_NAME}  pushed Successfully ..... "
+    }                                                                                          //Using IMAGE_NAME to use the version of the app + build_number 
                }
             }
         }
