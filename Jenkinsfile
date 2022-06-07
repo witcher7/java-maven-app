@@ -51,6 +51,7 @@ pipeline {
                           //set configurations 
                           sh 'git config --global user.email "mohmd46alaa@gmail.com"'
                           sh 'git config --global user.name "mohamedalaa13"'
+                          sh 'git config -l '
                           //Using the URL below to make git Commands on
                           sh "git remote set-url origin https://${USER}:${PASSWORD}@gitlab.com/mohamedalaa13/java-maven-app.git"
                           sh 'git add .'
