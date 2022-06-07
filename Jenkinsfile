@@ -14,7 +14,7 @@ pipeline {
                     sh 'mvn build-helper:parse-version versions:set \
                         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                         versions:commit'
-                    def matcher = readFile('pom.xml') =~ '<version>(.+)<version>'       //here we get the version of app from pom.xml 
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'       //here we get the version of app from pom.xml 
                     def version = matcher[0][1]
                     env.IMAGE_NAME= "$version-$BUILD_NUMBER" 
                     echo "image_Name is ${IMAGE_NAME}"                          //here we add build_number to image anme
