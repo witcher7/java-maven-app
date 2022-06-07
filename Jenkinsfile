@@ -1,8 +1,3 @@
-#!/usr/bin/env groovy
-@Library('jenkins-shared-library')
-
-def groovy
-
 pipeline {
     agent any
 
