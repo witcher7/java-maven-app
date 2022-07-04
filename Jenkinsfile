@@ -18,6 +18,8 @@ pipeline {
             steps {
                 script {
                     echo "building jar"
+                                        echo "building jar"
+
                     echo "building the application"
                     sh 'mvn package'
                 }
