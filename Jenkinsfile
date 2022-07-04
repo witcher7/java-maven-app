@@ -1,7 +1,12 @@
+#!/usr/bin/env groovy
 def gv
 
 pipeline {
     agent any
+    tools {
+        maven  'maven'
+        docker 'docker'
+    }
     stages {
         stage("init") {
             steps {
@@ -14,15 +19,22 @@ pipeline {
             steps {
                 script {
                     echo "building jar"
-                    //gv.buildJar()
+                    echo "building the application"
+                      sh 'mvn package'
+
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "building the docker image .."
+    withCredentials([usernamePassword(credentialsId: 'Docker_hub', usernameVariable: 'user',        passwordVariable: 'pass')]) 
+            {   sh 'docker build -t ahmedabed/demo-app:test .'
+                sh "echo $pass | docker login -u $user --password-stdin"
+                sh 'docker push ahmedabed/demo-app:test'
+                }
+
                 }
             }
         }
