@@ -6,7 +6,7 @@ services:
       - 8080:8080
   postgres:
     image: postgres:14.4
-    port:
+    ports:
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=Dot@2020
