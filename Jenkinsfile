@@ -29,9 +29,10 @@ pipeline {
         stage("deploy app "){
             steps {
                 script {
-                    def shellCmd = "bash chmod +x ./script.sh"
+                    def shellCmd = "bash ./script.sh"
                     sshagent(['ec2-user']) {
                         sh "scp script.sh ec2-user@3.64.26.65:/home/ec2-user"
+                        sh "scp docker-compose.yaml ec2-user@3.64.26.65:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.64.26.65 ${shellCmd}"
                     }
                 }
