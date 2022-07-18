@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     def shellCmd = "bash ./script.sh"
-                    sshagent(['ec2-user']) {
+                    sshagent(['test1']) {
                         sh "scp script.sh ec2-user@3.73.40.186:/home/ece-user"
                         sh "scp docker-compose.yaml ec2-user@3.73.40.186:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.73.40.186 ${shellCmd} "
