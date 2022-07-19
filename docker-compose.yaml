@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   jave-maven-app:
-    image: ahmedabed/demo-app:1.1.1
+    image: ${image}
     ports:
       - 8080:8080
   postgres:
