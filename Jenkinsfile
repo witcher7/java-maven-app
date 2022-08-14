@@ -1,63 +1,28 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent any
-    tools {
-        maven 'Maven'
-    }
+    agent none
     stages {
-        stage('increment version') {
+        stage('build') {
             steps {
                 script {
-                    echo 'incrementing app version...'
-                    sh 'mvn build-helper:parse-version versions:set \
-                        -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
-                        versions:commit'
-                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-                    def version = matcher[0][1]
-                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                    echo "Building the application..."
                 }
             }
         }
-        stage('build app') {
+        stage('test') {
             steps {
                 script {
-                    echo "building the application..."
-                    sh 'mvn clean package'
-                }
-            }
-        }
-        stage('build image') {
-            steps {
-                script {
-                    echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t wh1227/demo-app:${IMAGE_NAME} ."
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push wh1227/demo-app:${IMAGE_NAME}"
-                    }
+                    echo "Testing the application..."
                 }
             }
         }
         stage('deploy') {
             steps {
                 script {
-                    echo 'deploying docker image to EC2...'
-                }
-            }
-        }
-        stage('commit version update') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'gitlab-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        // git config here for the first time run
-                        sh 'git config --global user.email "jenkins@example.com"'
-                        sh 'git config --global user.name "jenkins"'
-
-                        sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/wenghong1227/java-maven-app.git"
-                        sh 'git add .'
-                        sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
+                    def dockerCmd = 'docker run -p 3080:3080 wh1227/react-nodejs:1.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyCheking=no ec2-user@18.138.103.152 ${dockerCmd}"
                     }
                 }
             }
