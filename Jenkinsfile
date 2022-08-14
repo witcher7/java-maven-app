@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-library identifier: 'jenkins-feature/payment@master', retriever: modernSCM(
+library identifier: 'jenkins-jobs@master', retriever: modernSCM(
         [$class: 'GitSCMSource',
          remote: 'https://gitlab.com/wenghong1227/java-maven-app.git',
          credentialsId: 'gitlab-credentials'
