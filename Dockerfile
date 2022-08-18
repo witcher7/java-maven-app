@@ -2,7 +2,7 @@ FROM openjdk:8-jre-alpine
 
 EXPOSE 8080
 
-COPY ./target/java-maven-app-1.0-SNAPSHOT.jar /opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/
-WORKDIR /opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/
+COPY ./target/java-maven-app-1.0-SNAPSHOT.jar /usr/app
+WORKDIR /usr/app
 
 ENTRYPOINT ["java", "-jar", "java-maven-app-1.0-SNAPSHOT.jar"]
