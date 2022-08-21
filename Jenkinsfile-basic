@@ -1,28 +1,43 @@
 #!/usr/bin/env groovy
 
+def gv
 pipeline {
-    agent none
-    stages {
-        stage('build') {
-            steps {
-                script {
-                    echo "Building the application..."
-                }
-            }
-        }
-        stage('test') {
-            steps {
-                script {
-                    echo "Testing the application..."
-                }
-            }
-        }
-        stage('deploy') {
-            steps {
-                script {
-                    echo "Deploying the application..."
-                }
-            }
-        }
-    }
+	tools {
+		maven 'Maven'
+	}
+	agent any
+	stages{
+		// stage('init'){
+		// 	steps{
+		// 		script {
+		// 			gv = load 'script.groovy'
+		// 		}
+		// 	}
+		// }
+		stage('build'){
+			steps{
+				script {
+					maven package
+				}	
+			}
+		}
+		stage('buildImage'){
+			steps{
+				script{
+					withCredentials([usernamePassword(credential: 'docker-cred', usernameVariable: 'DOCKERUSER', passwordVariable: 'DOCKERPASS')]) {
+						sh 'docker build -t khelvn/sirotech:jma-1.0 .'
+						sh 'echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin'
+						sh 'docker push khelvn/sirotech:jma-1.0'
+
+					}
+				}
+			}
+		}
+		stage('deploy'){
+			steps{
+				echo 'deploying jma to docker hub ...'	
+			}
+		}
+
+	}
 }
