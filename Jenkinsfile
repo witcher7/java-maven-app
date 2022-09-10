@@ -25,7 +25,7 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage 'rpchandu18/java-maven-app:3.0'
                 }
             }
         }
