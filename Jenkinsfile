@@ -25,9 +25,7 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage 'rpchandu18/java-maven-app:4.0'
-                    dockerLogin()
-                    dockerPush 'rpchandu18/java-maven-app:4.0'
+                    buildImage 'rpchandu18/java-maven-app:3.0'
                 }
             }
         }
