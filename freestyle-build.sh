@@ -1,1 +1,2 @@
-npm --version
+# npm --version
+echo "hello world"
