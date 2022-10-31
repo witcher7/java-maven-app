@@ -17,7 +17,7 @@ pipeline{
             script{
                 echo "building the docker image..."
                 withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')])
-                    sh 'docker build -t haimor/demo-app:jma-1.0 . ' 
+                    sh 'docker build -t java-maven-app . ' 
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     sh 'docker push haimor/demo-app:jma-1.0'
                  }
