@@ -1,58 +1,32 @@
-def gv
-
 pipeline{
-
     agent any
-
-    parameters {
-        choice(name: 'VERSION',  choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+    tools{
+        maven "Maven"
     }
     stages{
-
-
-        stage("init"){
+        stage("build jar"){
             steps{
                 script{
-                    gv = load "script.groovy"
+                    echo "building the application..."
+                    sh "mvn package"
                 }
             }
         }
-
-        stage("build"){
-            steps{
-                script{
-                    gv.buildApp()
-                }
-            }
-        }
-        stage("test"){
-
-            when{
-                expression{
-                    params.executeTest
-                }
-            }
-            steps{
-              script{
-                  gv.testApp()
-              }
-            }
+    stage("build image"){
+        steps{
+            script{
+                echo "building the docker image..."
+                withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                    sh 'docker build -t haimor/demo-app:jma-2.0 . ' 
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push haimor/demp-app:jma-2.0'
+                 }
+           }
         }
         stage("deploy"){
-            input {
-                message "select the environment to deploy to"
-                ok "Done"
-                parameters{
-                    choice(name: 'ONE',  choices: ['dev', 'staging', 'prod'], description: '')
-                    choice(name: 'TWO',  choices: ['dev', 'staging', 'prod'], description: '')
-                }
-            }
             steps{
                 script{
-                    gv.deployApp()
-                    echo "Deploying to ${ONE}"
-                    echo "Deploying to $TWO}"
+                    echo "deploying the application..."
                 }
             }
         }
