@@ -1,4 +1,4 @@
-def buildJar() {
+def buildApp() {
     echo "building the application..."
     sh 'mvn package'
 } 
@@ -11,6 +11,11 @@ def buildImage() {
         sh 'docker push nanajanashia/demo-app:jma-2.0'
     }
 } 
+
+def testApp() {
+    echo "testing the application..."
+    sh 'mvn test'
+}
 
 def deployApp() {
     echo 'deploying the application...'
