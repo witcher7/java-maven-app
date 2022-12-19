@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying the application..."
-                    echo "Server Credentials ${SERVER_CREDENTIALS}
+                    echo "Server Credentials ${SERVER_CREDENTIALS}"
                     echo "deploy version ${params.VERSION}"
                 }
             }
