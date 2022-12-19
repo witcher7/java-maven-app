@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     echo "Building the application..."
-                    echo "Building version ${NEW_VERSION}
+                    echo "Building version ${NEW_VERSION}"
                 }
             }
         }
