@@ -1,7 +1,7 @@
 def gv
 
 pipeline {
-    agant any
+    agent any
     tools {
         maven 'maven3.8.7'
     }
@@ -24,11 +24,11 @@ pipeline {
             steps {
                 script {
                     gv.buildImage()
-                    }
                 }
-
             }
+
         }
+        
         stage ( 'deploy' ){
             steps {
                 script {
