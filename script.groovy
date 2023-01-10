@@ -35,7 +35,7 @@ def commitVersionUpdate () {
         sh 'git branch'
         sh 'git config --list'
 
-        sh "git remote set-url origin https//${USER}:${PASS}@gitlab.com/yassermagdy430/java-maven-app.hit"
+        sh "git remote set-url origin https://${USER}:${PASS}@gitlab.com/yassermagdy430/java-maven-app.git"
         sh 'git add .'
         sh 'git commit -m "ci: version update"'
         sh 'git push origin HEAD:jenkins-jobs'
