@@ -21,6 +21,7 @@ pipeline {
             steps {
                 script {
                     gv.buildJar()
+                    sh "echo test triger.."
                 }
             }
         }
