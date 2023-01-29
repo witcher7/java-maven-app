@@ -4,21 +4,21 @@ piepline {
 
     stages {
 
-        stages("build) {
+        stages("build") {
 
             steps {
                 echo ' building the application...'
             }
         }
 
-        stages("test) {
+        stages("test") {
 
             steps {
                 echo ' testing the application...'
             }
         }
 
-        stages("deploy) {
+        stages("deploy") {
 
             steps {
                 echo ' deploying the application...'
