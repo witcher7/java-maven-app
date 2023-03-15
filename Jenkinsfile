@@ -25,7 +25,7 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage 'tunglamadm/my-repo:jma-3.0'
                 }
             }
         }
