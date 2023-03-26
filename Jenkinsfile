@@ -48,8 +48,8 @@ pipeline {
         }
         stage('commit version update') {
             steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'Git-Lab_Id', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+              //  script {
+              //      withCredentials([usernamePassword(credentialsId: 'Git-Lab_Id', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         // git config here for the first time run
                        // sh 'git config --global user.email "jenkins@example.com"'
                        // sh 'git config --global user.name "jenkins"'
