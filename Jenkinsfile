@@ -46,8 +46,8 @@ pipeline {
                 }
             }
         }
-        stage('commit version update') {
-            steps {
+        //stage('commit version update') {
+          //  steps {
               //  script {
               //      withCredentials([usernamePassword(credentialsId: 'Git-Lab_Id', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         // git config here for the first time run
@@ -60,8 +60,8 @@ pipeline {
                       //  sh 'git push origin jenkins-jobs'
                   //  }
                // }
-            }
-        }
+           // }
+       // }
     }
 }
 
