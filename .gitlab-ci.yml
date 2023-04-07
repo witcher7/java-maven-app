@@ -15,5 +15,5 @@ release:
     - mvn release:prepare
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-      when: never
+      when: on_success
    # - mvn release:perform
