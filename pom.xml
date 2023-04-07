@@ -33,6 +33,20 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+              <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-release-plugin</artifactId>
+      <version>3.0.0-M1</version>
+      <configuration>
+        <tagNameFormat>@{project.version}</tagNameFormat>
+        <autoVersionSubmodules>true</autoVersionSubmodules>
+        <releaseProfiles>release</releaseProfiles>
+        <goals>deploy</goals>
+      </configuration>
+    </plugin>
+  </plugins>
         </plugins>
     </build>
 
