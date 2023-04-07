@@ -34,7 +34,7 @@
                 </configuration>
             </plugin>
 
-              <plugins>
+
     <plugin>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-release-plugin</artifactId>
@@ -46,7 +46,7 @@
         <goals>deploy</goals>
       </configuration>
     </plugin>
-  </plugins>
+
         </plugins>
     </build>
 
