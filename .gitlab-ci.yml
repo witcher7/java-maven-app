@@ -4,5 +4,9 @@ release:
   stage: release
   image: maven:3.6.3-jdk-11
   script:
+    -  git clone https://root:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git
+    -  cd ./$CI_PROJECT_NAME
+    -  git config user.name root
+    -  git config user.email yassermagdy430@gmail.com
     - mvn release:prepare
    # - mvn release:perform
