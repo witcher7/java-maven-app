@@ -11,9 +11,9 @@
 
     <scm>
 		<!-- https://tmp-token:E5TT54Sx7AWU_eyWrgsN@gitlab.fawry.io/testci/user-api.git -->
-    	<url>https://yassermagdy430:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</url>       
-		<connection>scm:git:https://yassermagdy430:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</connection>
-		<developerConnection>scm:git:https://yassermagdy430:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</developerConnection>
+    	<url>https://root:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</url>       
+		<connection>scm:git:https://root:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</connection>
+		<developerConnection>scm:git:https://root:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git</developerConnection>
         <tag>release_new/4.0.0</tag>
     </scm>
 
