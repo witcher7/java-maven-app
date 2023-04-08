@@ -27,7 +27,7 @@ release:
 
       if [[ -n $RELEASE_TYPE ]]
       then
-        mvn  release:update-versions -DautoVersionSubmodules=true -DupdateMatchingVersions=true -DreleaseType=$RELEASE_TYPE
+        mvn  release:update-versions -DautoVersionSubmodules=true -DupdateMatchingVersions=true -DreleaseType=$RELEASE_TYPE release:prepare
       fi
   
   
