@@ -15,10 +15,11 @@ release:
     -  echo $CI_COMMIT_MESSAGE
     # - mvn release:prepare
     - |
-      if   $CI_COMMIT_MESSAGE == *"bugfix"* 
+      if   [[ $CI_COMMIT_MESSAGE == *"bugfix"* ]]
       then
         echo "bug"
         mvn versions:set -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $3=$3+1; print $0}')      elif  [[ $CI_COMMIT_MESSAGE == *"feature"* ]]
+      elif [[ $CI_COMMIT_MESSAGE == *"feature"* ]]
       then
         mvn versions:set -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $2++; $3=0; print $0}')
       fi
