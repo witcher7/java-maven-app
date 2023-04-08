@@ -22,7 +22,7 @@ release:
       then
         export RELEASE_TYPE="minor"
       else
-        export RELEASE_TYPE=""
+        export RELEASE_TYPE="major"
       fi
 
       if [[ -n $RELEASE_TYPE ]]
