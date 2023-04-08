@@ -15,8 +15,7 @@ release:
     - |
       if [ CI_COMMIT_MESSAGE == *"bugfix"* ]; then
         mvn release:prepare
-      else 
-      [ CI_COMMIT_MESSAGE == *"feature"* ]; then
+      elif [ CI_COMMIT_MESSAGE == *"feature"* ]; then
         mvn release:prepare -DincrementMinorVersion=true
       fi
 
