@@ -13,16 +13,12 @@ release:
     -  echo $CI_COMMIT_MESSAGE
     #- mvn release:prepare
     - |
-      if [ CI_COMMIT_MESSAGE == *"bugfix"* ]; then
+      if [[ CI_COMMIT_MESSAGE == *"bugfix"* ]]
+      then
         mvn release:prepare
-      elif [ CI_COMMIT_MESSAGE == *"feature"* ]; then
+      elif [[ CI_COMMIT_MESSAGE == *"feature"* ]]
+      then
         mvn release:prepare -DincrementMinorVersion=true
+      else
+        mvn release:prepare
       fi
-
-      # if [[ -n $RELEASE_TYPE ]]
-      # then
-      #   mvn  release:update-versions -DautoVersionSubmodules=true -DupdateMatchingVersions=true -DreleaseType=$RELEASE_TYPE release:prepare
-      # fi
-      # - find . -name "pom.xml" -exec sed -i "s/<version>.*<\/version>/<version>$new_version<\/version>/g" {} \;
-      # - git add */pom.xml
-      # - echo "New version: $new_version"
