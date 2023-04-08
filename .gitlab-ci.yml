@@ -15,16 +15,19 @@ release:
     -  echo $CI_COMMIT_MESSAGE
     #- mvn release:prepare
     - |
-      if   [[ $CI_COMMIT_MESSAGE == *"bugfix"* ]]
+      if [[ $CI_COMMIT_MESSAGE == *"[bugfix]"* ]]
       then
-        echo "bug"
-        mvn versions:set  -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $3=$3+1; print $0}')
-
-      # then
-      #   mvn versions:set -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $2++; $3=0; print $0}')
+        export RELEASE_TYPE="patch"
+      elif [[ $CI_COMMIT_MESSAGE == *"[feature]"* ]]
+      then
+        export RELEASE_TYPE="minor"
+      else
+        export RELEASE_TYPE=""
       fi
-    - mvn clean install
-    - mvn release:prepare -B -DautoVersionSubmodules=true -DdevelopmentVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)-SNAPSHOT
-    - mvn release:perform -B -DskipTests
+
+      if [[ -n $RELEASE_TYPE ]]
+      then
+        mvn  release:update-versions -DautoVersionSubmodules=true -DupdateMatchingVersions=true -DreleaseType=$RELEASE_TYPE
+      fi
   
    # - mvn release:perform
