@@ -35,6 +35,7 @@ stages:
   
   versioning:
     stage: build
+    image: maven:3.6.3-jdk-11
     script:
       -  git clone https://root:glpat-FUxW549x1jebmawpsa9B@gitlab.com/yassermagdy430/java-maven-app.git
       -  cd ./$CI_PROJECT_NAME
