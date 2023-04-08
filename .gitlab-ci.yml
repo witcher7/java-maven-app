@@ -11,8 +11,8 @@ release:
     -  git config user.name root
     -  git config user.email yassermagdy430@gmail.com
     -  echo $CI_COMMIT_MESSAGE
-    #-  mvn release:prepare -DincrementalRelease=true
-    - mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression="project.version.replaceFirst('^(\\d+\\.\\d+\\.)(\\d+)$', '\${1}' + (Integer.valueOf('\${2}') + 1))" -q -DforceStdout=true) versions:commit
+    -  mvn release:prepare -DincrementalRelease=true
+    #- mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression="project.version.replaceFirst('^(\\d+\\.\\d+\\.)(\\d+)$', '\${1}' + (Integer.valueOf('\${2}') + 1))" -q -DforceStdout=true) versions:commit
    #- mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression="project.version.replaceFirst('^(\\d+\\.)(\\d+\\.\\d+)$', '\${1}' + (Integer.valueOf('\${2}') + 1) + '.0')" -q -DforceStdout=true) versions:commit
     #- mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression="project.version.replaceFirst('^(\\d+\\.)(\\d+\\.)(\\d+)$', '\${1}' + (Integer.valueOf('\${2}') + 1) + '.' + (Integer.valueOf('\${3}') + 1))" -q -DforceStdout=true) versions:commit
     #- mvn release:prepare
