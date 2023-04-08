@@ -30,4 +30,5 @@ release:
         mvn  release:update-versions -DautoVersionSubmodules=true -DupdateMatchingVersions=true -DreleaseType=$RELEASE_TYPE
       fi
   
+  
    # - mvn release:perform
