@@ -13,10 +13,10 @@ release:
     -  echo $CI_COMMIT_MESSAGE
     #- mvn release:prepare
     - |
-      if  CI_COMMIT_MESSAGE == *"bugfix"* 
+      if [[ CI_COMMIT_MESSAGE == *"bugfix"* ]] 
       then
         mvn release:prepare
-      elif  CI_COMMIT_MESSAGE == *"feature"* 
+      elif [[ CI_COMMIT_MESSAGE == *"feature"* ]]
       then
         mvn release:prepare -DincrementMinorVersion=true
       fi
