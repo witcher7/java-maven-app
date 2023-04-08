@@ -19,7 +19,8 @@ release:
     #- mvn versions:set -DnewVersion=$(mvn help:evaluate -Dexpression="project.version.replaceFirst('^(\\d+\\.)(\\d+\\.)(\\d+)$', '\${1}' + (Integer.valueOf('\${2}') + 1) + '.0')" -q -DforceStdout=true) versions:commit
     ## - mvn release:prepare -DreleaseVersion=1.24.4 -DdevelopmentVersion=1.25.0-SNAPSHOT
     #- mvn build-helper:parse-version versions:set release:prepare -DdevelopmentVersion =\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT 
-    - mvn versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DgenerateBackupPoms=false
+    # - mvn versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DgenerateBackupPoms=false
+    - mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT
           # - |
     #   if [[ CI_COMMIT_MESSAGE == *"bugfix"* ]]
     #   then
