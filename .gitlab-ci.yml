@@ -21,9 +21,7 @@ release:
     #- mvn build-helper:parse-version versions:set release:prepare -DdevelopmentVersion =\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0-SNAPSHOT 
     # - mvn versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT -DgenerateBackupPoms=false
     #- mvn build-helper:parse-version versions:set -DnewVersion='${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.${parsedVersion.nextIncrementalVersion}-SNAPSHOT'
-    - mvn build-helper:parse-version versions:set \
-   release:prepare \
-      -DdevelopmentVersion ='${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT 
+    - mvn build-helper:parse-version versions:set release:prepare -DdevelopmentVersion='${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT' 
           # - |
     #   if [[ CI_COMMIT_MESSAGE == *"bugfix"* ]]
     #   then
