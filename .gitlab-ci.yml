@@ -13,7 +13,7 @@ release:
     -  git config user.name root
     -  git config user.email yassermagdy430@gmail.com
     -  echo $CI_COMMIT_MESSAGE
-    # - mvn release:prepare
+     - mvn release:prepare
     - |
       if   [[ $CI_COMMIT_MESSAGE == *"bugfix"* ]]
       then
@@ -29,5 +29,7 @@ release:
     - mvn release:perform -B -DskipTests
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+      changes:  
+           - "test"
       when: on_success
    # - mvn release:perform
