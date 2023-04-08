@@ -14,9 +14,13 @@ release:
     -  git config user.email yassermagdy430@gmail.com
     # - mvn release:prepare
     - |
-      if [[ $CI_COMMIT_MESSAGE == *"bugfix"* ]]; then
-        mvn versions:set -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $3++; print $0}')
-      elif [[ $CI_COMMIT_MESSAGE == *"feature"* ]]; then
+      if  $CI_COMMIT_MESSAGE == *"bugfix"* 
+      then
+        mvn versions:set \
+        -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version \
+        -q -DforceStdout | awk -F. '{OFS="."; $3++; print $0}')
+      elif  $CI_COMMIT_MESSAGE == *"feature"* 
+      then
         mvn versions:set -DnewVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout | awk -F. '{OFS="."; $2++; $3=0; print $0}')
       fi
     - mvn clean install
