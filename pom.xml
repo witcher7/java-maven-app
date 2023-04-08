@@ -43,7 +43,7 @@
             </plugin>
 
 
-    <plugin>
+    <!-- <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>2.5.3</version>
@@ -59,8 +59,31 @@
                              <version>1.8.1</version>
                        </dependency>
                     </dependencies>
-                </plugin>
-
+                </plugin> -->
+        <build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-release-plugin</artifactId>
+      <version>2.5.3</version>
+      <configuration>
+        <arguments>-Dmaven.javadoc.skip=true</arguments>
+        <autoVersionSubmodules>true</autoVersionSubmodules>
+        <tagNameFormat>v@{project.version}</tagNameFormat>
+        <releaseProfiles>release</releaseProfiles>
+        <preparationGoals>versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}</preparationGoals>
+        <completionGoals>versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.0-SNAPSHOT</completionGoals>
+      </configuration>
+      <dependencies>
+                        <dependency>
+                             <groupId>org.apache.maven.plugins</groupId>
+                             <artifactId>maven-scm-plugin</artifactId>
+                             <version>1.8.1</version>
+                       </dependency>
+                    </dependencies>
+    </plugin>
+  </plugins>
+</build>
 
         </plugins>
     </build>
