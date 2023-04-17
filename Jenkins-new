@@ -8,6 +8,7 @@ pipeline {
             steps {
                 script {
                     echo "building the application..."
+                    echo "building the integration..."
                     sh 'mvn package'
                 }
             }
@@ -28,6 +29,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying the application..."
+                    echo "building the integration..."
                 }
             }
         }  
