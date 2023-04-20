@@ -5,6 +5,10 @@ pipeline {
     tools {
         maven 'Maven'
     }
+    environmental {
+    DOCKER_REPO_SERVER = '354358814412.dkr.ecr.ap-south-1.amazonaws.com'
+    DOCKER_REPO = "${DOCKER_REPO_SERVER}/java-maven-app"
+    }
     stages {
         stage('increment version') {
             steps {
@@ -31,14 +35,28 @@ pipeline {
             steps {
                 script {
                     echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh "docker build -t waseemkhandocker/my-docker-repo:${IMAGE_NAME} ."
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh "docker push waseemkhandocker/my-docker-repo:${IMAGE_NAME}"
+                    withCredentials([usernamePassword(credentialsId: 'ecr-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t ${DOCKER_REPO}:${IMAGE_NAME} ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin ${DOCKER_REPO_SERVER}"
+                        sh "docker push ${DOCKER_REPO}:${IMAGE_NAME}"
                     }
                 }
             }
         }
+
+//         stage('build image') {
+//                     steps {
+//                         script {
+//                             echo "building the docker image..."
+//                             withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+//                                 sh "docker build -t waseemkhandocker/my-docker-repo:${IMAGE_NAME} ."
+//                                 sh "echo $PASS | docker login -u $USER --password-stdin"
+//                                 sh "docker push waseemkhandocker/my-docker-repo:${IMAGE_NAME}"
+//                             }
+//                         }
+//                     }
+//                 }
+
 //         stage('deploy') {
 //             steps {
 //                 script {
@@ -50,7 +68,7 @@ pipeline {
                     environment {
                        AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                        AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
-                       APP_NAME = 'java-maven-app'
+                       APP_NAME = 'java-maven-app2'
                     }
                     steps {
                         script {
