@@ -24,19 +24,20 @@ pipeline {
                 }
             }
         }
-
+        
+        stage("user input") {
             steps {
                 script {
                     def userInput = input(
                         message: "Enter the version of the application to deploy",
                         parameters: [
-                            string(name: 'VERSION', defaultValue: '1.0.0', description: 
-                            'The version of the application to deploy')
+                            string(name: 'VERSION', defaultValue: '1.0.0', description: 'The version of the application to deploy')
                         ]
                     )
                     echo "User input version: ${userInput.VERSION}"
                 }
             }
+        }
     
         stage("deploy") {
             when {
@@ -53,4 +54,3 @@ pipeline {
         }
     }   
 }
-
