@@ -2,6 +2,12 @@ def gv
 
 pipeline {
     agent any
+    
+    parameters {
+        string(name: 'ENVIRONMENT', defaultValue: 'production', description: 'The environment to deploy to')
+        choice(name: 'ENVIRONMENT_TYPE', choices: ['production', 'development', 'testing'], description: 'Select the environment type')
+    }
+    
     stages {
         stage("init") {
             steps {
@@ -20,6 +26,11 @@ pipeline {
         }
     
         stage("deploy") {
+            when {
+                expression {
+                    params.ENVIRONMENT == 'production'
+                }
+            }
             steps {
                 script {
                     echo "deploying"
@@ -29,3 +40,4 @@ pipeline {
         }
     }   
 }
+
