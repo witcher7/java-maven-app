@@ -21,6 +21,13 @@ pipeline {
                 script {
                     echo "building jar"
                     gv.buildJar()
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker_hub_repo', 
+                        passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh 'docker build -t sabryelhasanin/demo-app:jma-2.0 .'
+                        sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+                        sh 'docker push sabryelhasanin/demo-app:jma-2.0'
+                    }
                 }
             }
         }
