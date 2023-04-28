@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-    agent none
+    agent any
     stages {
         stage('build') {
             steps {
@@ -19,8 +19,11 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                script {
-                    echo "Deploying the application..."
+                script {                    
+                    def dockerCmd = 'docker run -p 3080:3080 -d waseemkhandocker/my-docker-repo:1.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@65.0.11.192 ${dockerCmd}"
+                        }
                 }
             }
         }

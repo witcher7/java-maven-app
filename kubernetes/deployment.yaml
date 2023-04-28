@@ -21,4 +21,4 @@ spec:
           image: $DOCKER_REPO:$IMAGE_NAME
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8081

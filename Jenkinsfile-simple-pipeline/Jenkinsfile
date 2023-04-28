@@ -7,7 +7,16 @@ pipeline {
     tools {
         maven 'Maven'
     }
+    
+
     stages {
+        stage("Checking Jenkins File") {
+            steps {
+                script {
+                    echo "Running This Stage"
+                }
+            }
+        }
         stage("init") {
             steps {
                 script {
