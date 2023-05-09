@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_TTY = 'true'
+    }
     tools {
         maven 'maven-3.9.1'
     }
