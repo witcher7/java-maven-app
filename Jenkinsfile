@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     buildImage(env.IMAGE_NAME)
+                    pushImage(env.IMAGE_NAME)
                 }
             }
         }
