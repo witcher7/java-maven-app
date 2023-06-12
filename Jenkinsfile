@@ -29,7 +29,7 @@ pipeline {
         stage("build image") {
             steps {
                 script {
-                    buildImage($IMAGE_NAME)
+                    buildImage(env.IMAGE_NAME)
                 }
             }
         }
