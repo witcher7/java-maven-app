@@ -16,7 +16,7 @@ pipeline {
                         }
                 }
         }
-        stage("Build image")   {
+     /*   stage("Build image")   {
                 steps { 
                         script {
                             echo "building the docker image"
@@ -26,7 +26,7 @@ pipeline {
                                 sh 'docker push sandeep9vangala/demo-app:jma-2.0'
                         }
                 }
-        }
+        } */
         stage("deploy") {
             when {
                 expression {
