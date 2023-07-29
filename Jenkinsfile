@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+            choice(name: 'Version', choices: ['1.1.0', '1.2.0', '1.3.0'], description: ' ')
+            booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    }
     tools {
         maven 'maven-3.9'
     }
@@ -24,9 +28,14 @@ pipeline {
                 }
         }
         stage("deploy") {
+            when {
+                expression {
+                        params.executeTests
+                }
+            }
              steps {
                     script { 
-                          echo "deploying the application"
+                          echo "deploying the application ${params.Version}"
                     }
             }
         }
