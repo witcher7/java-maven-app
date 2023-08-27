@@ -3,7 +3,7 @@ pipeline{
     agent any
     stages{
         stage("init"){
-            stpes{
+            steps{
                 script{
                     gv = load "script.groovy"
                 }
