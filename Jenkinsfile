@@ -12,7 +12,9 @@ pipeline{
         stage("build")
         {
             steps{
-                gv.build()
+                script{
+                   gv.build()
+               }
             }
         }
     }
