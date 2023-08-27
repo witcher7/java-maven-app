@@ -1,4 +1,3 @@
-def gv
 pipeline{
     agent any
     tools{
@@ -13,11 +12,13 @@ pipeline{
         }
         stage("build docker image"){
             steps{
+                script{
                 echo "building docker image"
-                withCredentials([usernamePassword(credentialsId: '72c0db7f-cafd-4332-93de-f08a58b4f06f',usernameVariable: USER, passwordVariable: PWD)]){
+                withCredentials([usernamePassword(credentialsId: '72c0db7f-cafd-4332-93de-f08a58b4f06f',usernameVariable: 'USER', passwordVariable: 'PWD')]){
                     sh 'docker build -t koushik617/demo-app:tagname .'
                     sh "docker login -u ${USER} -p ${PWD}"
                     sh 'docker push koushik617/demo-app:tagname'
+                }
                 }
             }
         }
