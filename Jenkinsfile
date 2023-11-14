@@ -24,7 +24,7 @@ pipeline {
         stage("build app") {
             steps {
                 script {
-                    echo "building the application......"
+                    echo "building the application........."
                     sh 'mvn clean package'
                 }
             }
@@ -44,7 +44,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying docker image to EC2......"
+                    echo "deploying docker image to EC2........."
                 }
 
             }
