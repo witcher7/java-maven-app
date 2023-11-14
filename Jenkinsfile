@@ -1,31 +1,36 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
     tools {
-        maven "maven-3.9.5"
+        maven "Maven"
     }
     
     stages {
-        
-        stage("test") {
+        stage("build app") {
             steps {
                 script {
-                   echo "Testing the application..."
-                   echo "Testing the integration ......"
-                   echo "Testing the integration ..........."
+                    echo "building the application..."
+                    sh 'mvn package'
                 }
             }
         }
-        stage("build") {
+        stage("build image") {
             steps {
                 script {
-                   echo "Building the application..."
+                    echo "build and push docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+                        sh 'docker build -t ldchnsd/demo-app:jma-2.0 .'
+                        sh "echo $PWD | docker login -u $USER --password-stdin"
+                        sh 'docker push ldchnsd/demo-app:jma-2.0'
+                    }
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                   echo "Deploying the application..."
+                    echo "deploying docker image to EC2..."
                 }
 
             }
