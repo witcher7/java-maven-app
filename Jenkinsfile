@@ -51,5 +51,19 @@ pipeline {
 
             }
         }
+        stage('commit version update'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+                        sh "git remote set-url origin https://${USER}:${PWD}@gitlab.com/ldchnsd/java-maven-app.git"
+                        sh "git status"
+                        sh "git add ."
+                        sh "git commit -m 'ci:version bump'"
+                        sh "git push origin HEAD:jenkins-jobs"
+                        sh "docker push ldchnsd/demo-app:${IMAGE_NAME}"
+                    }
+                }
+            }
+        }
     }   
 }
