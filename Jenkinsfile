@@ -29,7 +29,10 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
+                    def dockerCmd = 'docker run -p 3080:3080 -d vjnolan/react-nodejs:1.0'
+                   sshagent(['ec2-server key']) {
+                       sh "ssh -o StrictHostKeyChecking=no ec2-user@51.20.131.44 ${dockercmd}"
+                      }
                     //gv.deployApp()
                 }
             }
