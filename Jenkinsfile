@@ -1,20 +1,11 @@
-def gv
-
 pipeline {
     agent any
     stages {
-        stage("init") {
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
         stage("build jar") {
             steps {
                 script {
                     echo "building jar"
-                    //gv.buildJar()
+                    // If you have specific commands to build the JAR, add them here
                 }
             }
         }
@@ -22,7 +13,7 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    //gv.buildImage()
+                    // If you have specific commands to build the Docker image, add them here
                 }
             }
         }
@@ -30,10 +21,10 @@ pipeline {
             steps {
                 script {
                     def dockerCmd = 'docker run -p 3080:3080 -d vjnolan/react-nodejs:1.0'
-                   sshagent(['ec2-server key']) {
-                       sh "ssh -o StrictHostKeyChecking=no ec2-user@51.20.131.44 ${dockercmd}"
-                      }
-                    //gv.deployApp()
+                    sshagent(['ec2-server key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@51.20.131.44 ${dockerCmd}"
+                    }
+                    // If you have deployment steps or commands, add them here
                 }
             }
         }
