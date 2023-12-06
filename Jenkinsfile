@@ -1,36 +1,67 @@
-def gv
+#!/usr/bin/env groovy
 
 pipeline {
     agent any
+    tools {
+        maven "maven-3.9.5"
+    }
+    
     stages {
-        stage("init") {
+        stage("increment app version") {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "incrementing the application version..."
+                    sh 'mvn build-helper:parse-version versions:set \
+                        -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                        versions:commit'
+                    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                    def version = matcher[0][1]
+                    env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+
                 }
             }
         }
-        stage("build jar") {
+        stage("build app") {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                    echo "building the application......"
+                    echo "building the application......"
+                    sh 'mvn clean package'
                 }
             }
         }
-        stage("build image") {
+        stage("build docker image") {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                    echo "build and push docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+                        sh "docker build -t ldchnsd/demo-app:${IMAGE_NAME} ."
+                        sh "echo $PWD | docker login -u $USER --password-stdin"
+                        sh "docker push ldchnsd/demo-app:${IMAGE_NAME}"
+                    }
                 }
             }
         }
         stage("deploy") {
             steps {
                 script {
-                    echo "deploying"
-                    //gv.deployApp()
+                    echo "deploying docker image to EC2......"
+                    echo "deploying docker image to EC2......"
+                }
+
+            }
+        }
+        stage('commit version update'){
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'USER', passwordVariable: 'PWD')]){
+                        sh "git remote set-url origin https://${USER}:${PWD}@gitlab.com/ldchnsd/java-maven-app.git"
+                        sh "git status"
+                        sh "git add ."
+                        sh "git commit -m 'ci:version bump'"
+                        sh "git push origin HEAD:jenkins-jobs"
+                        sh "docker push ldchnsd/demo-app:${IMAGE_NAME}"
+                    }
                 }
             }
         }
