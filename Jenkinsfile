@@ -18,11 +18,19 @@ pipeline {
             }
         }
         stage('deploy') {
+            environment{
+                aws_access_key_id = credentails("aws_secret_key")
+                aws_secret_access_key = credentails("aws_key_id")
+    
+
+            }
+
             steps {
                 script {
                    echo 'deploying docker image...'
-                   withKubeConfig([credentialsId: 'lke-credentials', serverUrl: 'https://79fa9228-1d11-47ec-870b-33106d53122b.eu-central-2.linodelke.net']) {
-                       sh 'kubectl create deployment nginx-deployment --image=nginx'
+                   withKubeConfig([credentialsId: 'config_file', serverUrl: 'https://8C915E34307A8F98D294499F3A4721AC.gr7.us-east-1.eks.amazonaws.com'])
+                    sh "kubectl create deployment nginx-deployment --image=nginx"
+
                    }
                 }
             }
