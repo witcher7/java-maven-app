@@ -8,23 +8,23 @@ pipeline {
         stage('build') {
             steps {
                 echo 'Building the application...'
-                echo "building version ${VERSION}" 
+                echo "Building version ${params.VERSION}"
             }
         }
         stage("test") {
             when {
                 expression {
-                    params.executeTests.value 
+                    params.executeTests
                 }
             }
             steps {
-                echo 'Testing the application...' 
+                echo 'Testing the application...'
             }
         }
         stage("deploy") {
             steps {
                 echo 'Deploying the application...'
-                echo "Deploying version ${VERSION}" 
+                echo "Deploying version ${params.VERSION}"
             }
         }
     }
