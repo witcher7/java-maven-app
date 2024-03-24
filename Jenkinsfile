@@ -1,22 +1,23 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        // Update the Maven tool installation name here
+        maven 'maven-3.9.6'
     }
     stages {
         stage("build jar") {
             steps {
                 script {
-                    echo "Building the application..."
-                    sh 'mvn package'
+                    echo " building the application..."
+                    sh 'mvn package' 
                 }
             }
         }
         stage("build image") {
             steps {
                 script {
-                    echo "Building the Docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo',  passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'docker build -t kennethfeh/my-repo:jma-2.0 .'
                         sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh 'docker push kennethfeh/my-repo:jma-2.0'
@@ -27,7 +28,7 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    echo "Deploying the application...."
+                    echo "deploying the application...."
                 }
             }
         }
