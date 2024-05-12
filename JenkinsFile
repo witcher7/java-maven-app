@@ -1,32 +1,33 @@
 pipeline {
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.0.0', '1.0.1', '1.0.2', '1.0.3'])
-        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+    parameters {    
+        choice(name: 'VERSION', choices: ['1.0.0','1.0.1', '1.0.2', '1.0.3'])
+        booleanParam(name: 'executeTest', defaultValue: 'true', description: '')
     }
     stages {
-        stage('Build') {
+        stage('build') {
             steps {
-                echo "Hello World from Build"
-                echo "Build version is ${params.VERSION}"
-            }
+                echo "Hello World from Build form vs"
+                echo "Build form build ${param.VERSION}"
+                }
         }
-        stage('Test') {
-            when {
+        stage('test') {
+            when{
                 expression {
-                    params.executeTest == true
+                    param.executeTest == true
                 }
             }
             steps {
-                echo "Hello World from tests"
-                echo "New Version is ${params.VERSION}"
-            }
+              echo "Hello World from tests"
+              echo "New Version is ${param.VERSION}"
+                }
         }
-        stage('Deploy') {
+        stage('deploy') {
             steps {
                 echo "Hello World from deploy"
-                echo "New Version is deployed ${params.VERSION}"
-            }
+                echo "New Version is deployed ${param.VERSION}"
+                }
         }
     }
+
 }
