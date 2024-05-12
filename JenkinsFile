@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
         choice(name: 'VERSION', choices: ['1.0.0', '1.1.0', '1.2.0'])
-        booleanParam(name: 'executeTest', default: true , description: '')
+        booleanParam(name: 'executeTest', defaultValue: true , description: '')
     }
     stages{
         stage('Build') {
@@ -26,7 +26,8 @@ pipeline {
             steps {
                 echo "Hello World from deploy"
                 echo "New Version is deployed ${params.VERSION}"
-            }
+               }   
+               }
     }
    }
 }
