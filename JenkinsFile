@@ -3,19 +3,19 @@ pipeline{
     stages {
         stage(build) {
             steps {
-           echo "Hello World"
+           echo "Hello World from Build form vs"
                 }
         }
 
-        stage(build) {
+        stage(test) {
             steps {
-              echo "Hello World"
+              echo "Hello World from tests"
                 }
         }
 
-        stage(build) {
+        stage(deploy) {
             steps {
-                echo "Hello World"
+                echo "Hello World from deploy"
                 }
         }
     }
