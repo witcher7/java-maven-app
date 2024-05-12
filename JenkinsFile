@@ -1,7 +1,15 @@
 pipeline{
+    
+
     agent any
     stages {
         stage(build) {
+            when{
+                expression{
+                    BRANCH_NAME == "main" && CODE_CHANGE == "true" 
+                }
+            }
+
             steps {
                 echo "Hello World from Build form vs"
                 echo "Build form build"
