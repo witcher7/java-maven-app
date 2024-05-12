@@ -2,17 +2,14 @@ pipeline{
     
 
     agent any
+    environment {
+        NEW_VERSION = '1.3.0'
+    }
     stages {
         stage(build) {
-            when{
-                expression{
-                    BRANCH_NAME == "main" //&& CODE_CHANGE == "true" 
-                }
-            }
-
             steps {
                 echo "Hello World from Build form vs"
-                echo "Build form build"
+                echo "Build form build ${NEW_VERSION}"
                 }
         }
 
