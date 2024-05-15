@@ -2,7 +2,6 @@ pipeline {
     agent any
     parameters {
         choice(name: 'VERSION', choices: ['1.0.0', '1.0.1', '1.0.2', '1.0.3'])
-        
         booleanParam(name: 'executeTest', defaultValue: true, description: '')
     }
     stages {
@@ -25,17 +24,15 @@ pipeline {
         }
         stage('Deploy') {
             input {
-                message "Enter the environment for the deploymnet"
+                message "Enter the environment for the deployment"
                 ok "Success"
                 parameters {
-                    choice(name: 'environmnet', choices: ['Prod', 'UAT', 'QA', 'DEV'])
+                    choice(name: 'environment', choices: ['Prod', 'UAT', 'QA', 'DEV'])
                 }
-            
+            }
             steps {
-                echo "Hello World from deploy"
-                //echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
+                echo "Hello World from deploy to ${params.environment}"
             }
         }
     }
-}
 }
