@@ -30,7 +30,7 @@ pipeline {
              //   parameters {
              //       choice(name: 'environmnet', choices: ['Prod', 'UAT', 'QA', 'DEV'])
              //   }
-            }
+            
             steps {
                 echo "Hello World from deploy"
              //   echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
