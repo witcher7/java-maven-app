@@ -24,8 +24,8 @@ pipeline {
             }
         }
         stage('Deploy') {
-            input{
-                echo "Enter the environment for the deploymnet"
+            input {
+                message "Enter the environment for the deploymnet"
                 ok "Success"
                 parameters {
                     choice(name: 'environmnet', choices: ['Prod', 'UAT', 'QA', 'DEV'])
