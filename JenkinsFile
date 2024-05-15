@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'VERSION', choices: ['1.0.0', '1.0.1', '1.0.2', '1.0.3'])
+        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+    }
+    stages{
+        stage('Build'){
+            steps{
+                echo "This is a Build stage"
+                echo "Build wih version ${params.VERSION}"            }
+            
+        }
+        stage('Test'){
+            when {
+                expression {
+                    params.executeTest == true
+                }
+            }
+            steps{
+                echo'This is a Test stage and test ok'
+            }
+            
+        }
+        stage('Deploy'){
+            input {
+                message "Enter the environment for the deployment"
+                ok "Success"
+                parameters {
+                    choice(name: 'environment', choices: ['Prod', 'UAT', 'QA', 'DEV'])
+                }
+            }
+            steps{
+                echo "This is a Deploy stage and deployed to ${params.environment}"
+            }
+            
+        }
+
+
+    }
+
+
+}
