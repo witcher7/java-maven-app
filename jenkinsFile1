@@ -1,43 +1,42 @@
 pipeline {
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.0.0', '1.0.1', '1.0.2', '1.0.3'])
-        booleanParam(name: 'executeTest', defaultValue: true, description: '')
+    tools {
+        maven 'my-maven'
     }
-    stages{
-        stage('Build'){
-            steps{
-                echo "This is a Build stage"
-                echo "Build wih version ${params.VERSION}"            }
-            
-        }
-        stage('Test'){
-            when {
-                expression {
-                    params.executeTest == true
+    stages {
+        stage('Build jar') {
+            steps {
+                script {
+                    echo "Build Jar file"
+                    sh 'maven package'
                 }
-            }
-            steps{
-                echo'This is a Test stage and test ok'
-            }
-            
         }
-        stage('Deploy'){
-            input {
-                message "Enter the environment for the deployment"
-                ok "Success"
-                parameters {
-                    choice(name: 'environment', choices: ['Prod', 'UAT', 'QA', 'DEV'])
-                }
-            }
-            steps{
-                echo "This is a Deploy stage and deployed to ${params.environment}"
-            }
-            
-        }
-
-
     }
 
+        stage('Build docker image') {
 
+            steps {
+                echo "Building docker image"
+            }
+
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId:'Docker-Hub', PasswordVariable: 'PASS', usernameVariable: 'USER')])
+                        sh 'docker build -t niwaapp:v1.0'
+                        sh 'docker tag niwaapp:v1.0 niwantha94/niwanthaapp:v1.0'
+                        sh 'echo $PASS | docker login -u USER --pasword-stdin'
+                        sh 'docker push niwantha94/niwanthaapp:v1.0'
+                        sh 'docker logout' 
+                }
+        }
+    }
+
+        stage('Deploy to dockerhub') {
+            steps {
+                script {
+                    sh 'echo "Hello World"'
+                }
+        }
+    }
+}
 }
