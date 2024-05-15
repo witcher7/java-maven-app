@@ -24,16 +24,16 @@ pipeline {
             }
         }
         stage('Deploy') {
-            //input{
-              //  echo "Enter the environment for the deploymnet"
-              //  ok "Success"
-             //   parameters {
-             //       choice(name: 'environmnet', choices: ['Prod', 'UAT', 'QA', 'DEV'])
-             //   }
+            input{
+                echo "Enter the environment for the deploymnet"
+                ok "Success"
+                parameters {
+                    choice(name: 'environmnet', choices: ['Prod', 'UAT', 'QA', 'DEV'])
+                }
             
             steps {
                 echo "Hello World from deploy"
-             //   echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
+                echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
             }
         }
     }
