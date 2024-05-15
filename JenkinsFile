@@ -33,7 +33,7 @@ pipeline {
             
             steps {
                 echo "Hello World from deploy"
-                echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
+                //echo "New Version is deployed in ${params.environmnet} environment with version ${params.VERSION}"
             }
         }
     }
