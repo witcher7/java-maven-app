@@ -1,32 +1,19 @@
 pipeline {
-    agent any
-    environment{
-        new_version="1.3.8"
-        server_credentials=credentials('Server-credentials')
+    agent {
+        label '!windows'
     }
+
+    environment {
+        DISABLE_AUTH = 'true'
+        DB_ENGINE    = 'sqlite'
+    }
+
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                echo 'building the application'
-                echo "building the application_version ${NEW_VERSION}"
-
-            }
-        }
-        stage('test') {
-            steps {
-                echo 'testing   the application'
-            }
-        }
-        stage('deploy') {
-            steps {
-                echo 'deploying    the application'
-                withCredentials([usernamePassword(credentials: 'server_credentials', usernameVariable: 'USERNAME', passwordVariable: 'PWD')])
-                {
-                  sh  "some scripting  ${USER} ${PWD}"
-//                   echo USERNAME
-//                   echo "username is $USERNAME"
-                }
-
+                echo "Database engine is ${DB_ENGINE}"
+                echo "DISABLE_AUTH is ${DISABLE_AUTH}"
+                sh 'printenv'
             }
         }
     }
