@@ -2,8 +2,8 @@ pipeline {
     agent any
 
          environment{
-         new_version=a"1.3.8"
-         server_credentials=credentials('Server-credentials')
+         NEW_VERSION=a"1.3.8"
+//         server_credentials=credentials('Server-credentials')
      }
 
     parameters{
