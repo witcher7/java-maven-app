@@ -2,58 +2,77 @@ def gv
 pipeline {
     agent any
 
-         environment{
-         NEW_VERSION="1.3.8"
-     }
-      parameters{
-        choice(name :"VERSION", choices:['1.1.0','1.2.0','1.3.0'] ,description:"")
-        booleanParam(name: "executeTests",defaultValue:true,description:"")
+    //      environment{
+    //      NEW_VERSION="1.3.8"
+    //  }
+    tools{
+        maven "Maven"
     }
+    //   parameters{
+    //     choice(name :"VERSION", choices:['1.1.0','1.2.0','1.3.0'] ,description:"")
+    //     booleanParam(name: "executeTests",defaultValue:true,description:"")
+    // }
 
     
     stages {
-        stage("init"){
+        stage("Build jar"){
             steps{
                 script{
-                    gv=load "script.groovy"
+                    echo " building the application"
+                    sh "mvn package"
                 }
 
             }
 
         }
-        stage("build") {
-            steps {
+          stage("Build image"){
+            steps{
                 script{
-                    gv.buildApp()
+                    echo " building the docker  image..."
+                withCredentials([usernamePassword(credentialsId:'	docker-hub-repo', usernameVAriable:'USER' ,passwordVariable: 'PASS')])
+                {
+                    sh "docker build -t bharatmundra/java-maven:test-1.0.1 ."
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh "docker push bharatmundra/java-maven:test-1.0.1"
+                }
                 }
 
             }
-        }
-        stage("test") {
-            steps{
-                script{
-                    gv.testApp()
-                }
-            }
-                
+
         }
         stage("deploy") {
-            input{
-                message "select enviroment to deploy to"
-                ok "Done"
-                parameters{
-                    choice(name :"ENV", choices:['DEV','STAGE','production'] ,description:"")
-
-                }
-            }
             steps {
                 script{
-                    gv.deployApp()
-                    echo "deploy on ${ENV}"
-                }
+                    echo "deployiong the application"
                 }
 
             }
+        }
+        // stage("test") {
+        //     steps{
+        //         script{
+        //             gv.testApp()
+        //         }
+        //     }
+                
+        // }
+        // stage("deploy") {
+        //     input{
+        //         message "select enviroment to deploy to"
+        //         ok "Done"
+        //         parameters{
+        //             choice(name :"ENV", choices:['DEV','STAGE','production'] ,description:"")
+
+        //         }
+        //     }
+        //     steps {
+        //         script{
+        //             gv.deployApp()
+        //             echo "deploy on ${ENV}"
+        //         }
+        //         }
+
+        //     }
         }
     
 }
