@@ -33,7 +33,7 @@ pipeline {
                 {
                     sh "docker build -t bharatmundra/java-maven:test-1.0.1 ."
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh "docker push bharatmundra/java-maven:test-1.0.1"
+                    sh "docker push bharatmundra/java-mevan:test-1.0.1"
                 }
                 }
 
