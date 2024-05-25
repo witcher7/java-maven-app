@@ -17,6 +17,14 @@ pipeline {
                 }
             }
         }
+         stage('Setup Buildx') {
+            steps {
+                script {
+                    sh 'docker buildx install'
+                    sh 'docker buildx create --use'
+                }
+            }
+        }
           stage("Build image"){
             steps{
                 script{
@@ -24,11 +32,12 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'docker-hub-repo', usernameVariable:'USER' ,passwordVariable: 'PASS')])
                 {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                   }
-                    echo "docker logging"
-                    sh 'docker buildx create --use'
                     sh "docker build -t bharatmundra/demo-app:latest . "
                     sh "docker push bharatmundra/demo-app:latest "
+         
+                   }
+                    // echo "docker logging"
+                    // sh 'docker buildx create --use'
                 
                 echo "login sucessfully"
                 }
