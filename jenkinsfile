@@ -2,9 +2,9 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_BUILDKIT = '1'
-    }
+    // environment {
+    //     DOCKER_BUILDKIT = '1'
+    // }
     tools{
         maven "maven_3.9"
     }
@@ -17,14 +17,14 @@ pipeline {
                 }
             }
         }
-         stage('Setup Buildx') {
-            steps {
-                script {
-                    sh 'docker buildx install'
-                    sh 'docker buildx create --use'
-                }
-            }
-        }
+        //  stage('Setup Buildx') {
+        //     steps {
+        //         script {
+        //             sh 'docker buildx install'
+        //             sh 'docker buildx create --use'
+        //         }
+        //     }
+        // }
           stage("Build image"){
             steps{
                 script{
