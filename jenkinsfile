@@ -1,6 +1,10 @@
 
 pipeline {
     agent any
+
+    environment {
+        DOCKER_BUILDKIT = '1'
+    }
     tools{
         maven "maven_3.9"
     }
@@ -20,11 +24,12 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId:'docker-hub-repo', usernameVariable:'USER' ,passwordVariable: 'PASS')])
                 {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
+                   }
                     echo "docker logging"
 
                     sh "docker build -t bharatmundra/demo-app:latest . "
                     sh "docker push bharatmundra/demo-app:latest "
-                }
+                
                 echo "login sucessfully"
                 }
             }
