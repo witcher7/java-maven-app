@@ -22,8 +22,8 @@ pipeline {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
                     echo "docker logging"
 
-                    sh 'docker build -t bharatmundra/demo-app:latest .'
-                    // sh "docker push bharatmundra/demo-app:latest"
+                    sh "docker build -t bharatmundra/demo-app:latest . "
+                    sh "docker push bharatmundra/demo-app:latest "
                 }
                 echo "login sucessfully"
                 }
