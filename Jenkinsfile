@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
+
 def gv
+
 pipeline {
     agent any
     stages {
@@ -26,6 +28,13 @@ pipeline {
             }
         }
         stage('deploy') {
+            input{
+                message "select env to deploy to"
+                ok "done"
+                parameters {
+                    choice(name: 'Env', choices: ['dev', 'staguing', 'produc'], description: '')
+                }
+            }
             steps {
                 script {
                     gv.deployApp()
