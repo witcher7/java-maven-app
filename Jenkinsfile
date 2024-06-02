@@ -2,7 +2,7 @@
 
 pipeline {
     agent any
- //   parameters {
+    parameters {
         choice(name: 'VERSION', defaultValue:'', description: 'version to deply on prod')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
