@@ -1,22 +1,30 @@
 #!/usr/bin/env groovy
-
 def gv
-
 pipeline {
     agent any
+    tools {
+        maven 'maven_nana_3.9.6'
+    }
     stages {
-        stage("init") {
+
+        stage('BuildJar') {
             steps {
                 script {
-                    gv = load "script.groovy"
+                    echo "building the Jar..."
+                    sh 'mvn package'
                 }
             }
         }
-
-        stage('build') {
+        
+        stage('BuildIMAGE') {
             steps {
                 script {
-                    gv.buildApp()
+                    echo "building the docker Image..."
+                    withCredentials([usernamPassword(credentialsId: 'docker_hub_repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh 'docker build -t bnnyo/bnnyorepo:amanJenjinsFile1.1 .'
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker push bnnyo/bnnyorepo:amanJenjinsFile1.1'
+                    }
                 }
             }
         }
