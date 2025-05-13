@@ -1,0 +1,13 @@
+name: Hello World Workflow
+on: [push]
+
+jobs:
+   say-hello:
+     runs-on: ubuntu-latest
+     steps: 
+       - name: Checkout Code
+         uses: actions/checkout@v3
+# REUSABLE SCRIPT plugin lo and kaam karo ---> Actions
+
+       - name: Say Hello
+         run: echo "Hello Homie !!! Github actions is lit"
