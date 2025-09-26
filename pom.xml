@@ -10,16 +10,18 @@
     <version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <!-- lock in Java version so it works across Jenkins/local builds -->
+    <name>Java Maven App</name>
+
+    <!-- Lock Java + compiler version -->
     <properties>
-        <java.version>11</java.version> <!-- or 17 if Jenkins runs JDK 17 -->
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- Change to 17 if Jenkins is running JDK 17 -->
+        <java.version>11</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
     </properties>
 
     <build>
         <plugins>
-            <!-- Spring Boot plugin -->
+            <!-- Spring Boot plugin for runnable JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -33,7 +35,7 @@
                 </executions>
             </plugin>
 
-            <!-- Modern compiler plugin -->
+            <!-- Updated compiler plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -61,12 +63,11 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Structured logging for Logstash -->
+        <!-- Logstash encoder for structured logging -->
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>6.4</version>
         </dependency>
     </dependencies>
-
 </project>
